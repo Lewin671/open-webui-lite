@@ -3,7 +3,7 @@ import React from 'react'
 const SuggestionItem = ({ title, description }) => {
   return (
     <div className='bg-transparent py-1.5 cursor-pointer rounded-md transition-colors duration-200 hover:bg-primary-light dark:hover:bg-primary-dark'>
-      <h5 className='text-sm font-medium mb-0.5 text-[#cdcdcd] transition line-clamp-1'>
+      <h5 className='font-medium mb-0.5 text-[#cdcdcd] transition line-clamp-1'>
         {title}
       </h5>
       <p className='text-xs text-[#9b9b9b] font-normal line-clamp-1 m-0'>
