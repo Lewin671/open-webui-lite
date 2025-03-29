@@ -1,2 +1,12 @@
 @import 'tailwindcss';
 @config "../tailwind.config.js";
+
+@font-face {
+  font-family: 'Archivo';
+  src: url('./assets/fonts/Archivo-Variable.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter Variable';
+  src: url('./assets/fonts/Inter-Variable.ttf') format('truetype');
+}

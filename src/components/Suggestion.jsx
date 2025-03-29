@@ -3,8 +3,8 @@ import React from 'react'
 const SuggestionItem = ({ title, description }) => {
   return (
     <div className='bg-transparent py-1.5 cursor-pointer rounded-md transition-colors duration-200 hover:bg-primary-light dark:hover:bg-primary-dark'>
-      <h5 className='text-sm font-medium mb-0.5 '>{title}</h5>
-      <p className='text-xs  leading-relaxed m-0'>{description}</p>
+      <h5 className='text-sm font-medium mb-0.5 dark:text-gray-300 dark:group-hover:text-gray-200 transition line-clamp-1'>{title}</h5>
+      <p className='text-xs text-gray-500 font-normal line-clamp-1 m-0'>{description}</p>
     </div>
   )
 }
@@ -27,22 +27,9 @@ const defaultSuggestions = [
 const Suggestion = ({ suggestions = defaultSuggestions }) => {
   return (
     <div className='mx-auto max-w-2xl w-full'>
-      <div className='flex items-center gap-1.5 text-sm font-medium  mb-3'>
-        <svg
-          width='14'
-          height='14'
-          viewBox='0 0 24 24'
-          fill='none'
-          xmlns='http://www.w3.org/2000/svg'
-          className='w-3.5 h-3.5 opacity-70'
-        >
-          <path
-            d='M10 19L12 13H9L14 5L12 11H15L10 19Z'
-            stroke='currentColor'
-            strokeWidth='2'
-            strokeLinecap='round'
-            strokeLinejoin='round'
-          />
+      <div className='mb-1 flex gap-1 text-xs font-medium items-center text-gray-400 dark:text-gray-600'>
+        <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth='1.5' stroke='currentColor' className='size-3'>
+          <path strokeLinecap='round' strokeLinejoin='round' d='m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z' />
         </svg>
         <span>建议</span>
       </div>
