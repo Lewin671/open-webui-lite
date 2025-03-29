@@ -1,4 +1,5 @@
 import React from 'react';
+import './styles/Main.css';
 import Header from './Header';
 import ChatView from './ChatView';
 import Input from './Input';

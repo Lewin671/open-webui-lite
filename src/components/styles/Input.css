@@ -1,0 +1,75 @@
+/* --- Input Container --- */
+.input-container {
+    padding: 15px 0 10px 0; /* Adjust padding */
+    width: 100%;
+    max-width: 800px; /* Limit input width */
+    margin: 0 auto; /* Center input area */
+    flex-shrink: 0; /* Prevent input area from shrinking */
+    position: sticky; /* Make input sticky at the bottom */
+    bottom: 0;
+    background-color: var(--bg-main); /* Match main panel background */
+    z-index: 10;
+}
+
+.input-wrapper {
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 5px 10px; /* Adjust padding */
+    margin-bottom: 8px; /* Space before disclaimer */
+}
+
+.input-wrapper input[type="text"] {
+    flex-grow: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-light);
+    font-size: 14px;
+    padding: 10px 5px; /* Padding inside input */
+    margin: 0 5px; /* Spacing around input */
+}
+.input-wrapper input[type="text"]::placeholder {
+    color: var(--text-medium);
+}
+
+.icon-btn {
+    color: var(--text-medium);
+    font-size: 20px; /* Icon size */
+    padding: 8px;
+    border-radius: 4px;
+    flex-shrink: 0; /* Prevent buttons from shrinking */
+}
+.icon-btn:hover {
+    color: var(--text-light);
+    background-color: var(--hover-bg);
+}
+.send-btn {
+    background-color: var(--hover-bg); /* Slightly different bg for send */
+    color: var(--text-light);
+    border-radius: 50%; /* Make it round */
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    margin-left: 5px;
+}
+.send-btn:hover {
+     background-color: #4a4a4a; /* Darker hover for send */
+}
+.add-btn {
+    font-size: 24px; /* Make plus larger */
+    font-weight: 300;
+}
+
+.disclaimer {
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-medium);
+    /* margin-top: 10px; -- removed, margin added to input-wrapper */
+    padding: 0 10px;
+}

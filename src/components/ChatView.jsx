@@ -1,4 +1,5 @@
 import React from 'react';
+import './styles/ChatView.css';
 
 const SuggestionCard = ({ title, description }) => {
   return (
