@@ -7,9 +7,11 @@ const Main = () => {
   return (
     <main className="main-content">
       <Header />
-      <div className='chat-container'>
-        <ChatView />
-        <Input />
+      <div className='main-body'>
+        <div className='chat-container'>
+          <ChatView />
+          <Input />
+        </div>
       </div>
     </main>
   );

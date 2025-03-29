@@ -1,435 +1,440 @@
 /* App.css 中的样式已通过 Tailwind 在 index.css 中实现 */
 @layer components {
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
-  }
-  
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-  }
-  
-  .logo.react:hover {
-    filter: drop-shadow(0 0 2em #61dafbaa);
-  }
-  
-  .card {
-    padding: 2em;
-  }
-  
-  .read-the-docs {
-    color: #888;
-  }
+    .logo {
+        height: 6em;
+        padding: 1.5em;
+        will-change: filter;
+        transition: filter 300ms;
+    }
+
+    .logo:hover {
+        filter: drop-shadow(0 0 2em #646cffaa);
+    }
+
+    .logo.react:hover {
+        filter: drop-shadow(0 0 2em #61dafbaa);
+    }
+
+    .card {
+        padding: 2em;
+    }
+
+    .read-the-docs {
+        color: #888;
+    }
 }
 
 @keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+    a:nth-of-type(2) .logo {
+        animation: logo-spin infinite 20s linear;
+    }
 }
 
 /* 自定义样式 */
 .card {
-  transition: background-color 0.15s ease;
+    transition: background-color 0.15s ease;
 }
 
 .card:hover {
-  background-color: var(--hover-bg);
+    background-color: var(--hover-bg);
 }
 
 /* 侧边栏链接悬停效果 */
 aside a:hover {
-  background-color: var(--hover-bg);
-  color: var(--text-light);
+    background-color: var(--hover-bg);
+    color: var(--text-light);
 }
 
 /* 新聊天按钮悬停效果 */
 aside button:hover {
-  background-color: var(--hover-bg);
+    background-color: var(--hover-bg);
 }
 
 /* 按钮悬停效果 */
 button:hover {
-  opacity: 0.9;
+    opacity: 0.9;
 }
 
 /* 禁用文本选择 */
 * {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 /* 输入框可选择 */
 input {
-  -webkit-user-select: auto;
-  -moz-user-select: auto;
-  -ms-user-select: auto;
-  user-select: auto;
+    -webkit-user-select: auto;
+    -moz-user-select: auto;
+    -ms-user-select: auto;
+    user-select: auto;
 }
 
 .prompt-action .arrow-up {
-  opacity: 0;
-  transition: opacity 0.2s ease;
+    opacity: 0;
+    transition: opacity 0.2s ease;
 }
 
 .card:hover .prompt-action .arrow-up {
-  opacity: 1;
+    opacity: 1;
 }
 
 /* Add new styles for Sidebar */
 .sidebar {
-  width: 260px; /* Adjust width as needed */
-  background-color: #171717; /* Dark background */
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  border-right: 1px solid #333; /* Separator line */
-  flex-shrink: 0;
-  color: #e0e0e0; /* Light text color */
+    width: 260px; /* Adjust width as needed */
+    background-color: #171717; /* Dark background */
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    border-right: 1px solid #333; /* Separator line */
+    flex-shrink: 0;
+    color: #e0e0e0; /* Light text color */
 }
 
 .sidebar-header {
-  display: flex;
-  align-items: center;
-  padding: 12px 16px;
-  height: 60px; /* Adjust height as needed */
-  border-bottom: 1px solid #333;
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    height: 60px; /* Adjust height as needed */
+    border-bottom: 1px solid #333;
 }
 
 .sidebar-logo {
-  height: 24px; /* Adjust logo size */
-  width: 24px;
-  margin-right: 8px;
-  background: white;
-  border-radius: 50%;
+    height: 24px; /* Adjust logo size */
+    width: 24px;
+    margin-right: 8px;
+    background: white;
+    border-radius: 50%;
 }
 
 .sidebar-title {
-  font-weight: 500;
-  font-size: 14px;
-  flex-grow: 1;
-  margin-left: 4px; /* Space between logo and title */
+    font-weight: 500;
+    font-size: 14px;
+    flex-grow: 1;
+    margin-left: 4px; /* Space between logo and title */
 }
 
 .sidebar-edit-button {
-  background: none;
-  border: none;
-  color: #a0a0a0; /* Icon color */
-  cursor: pointer;
-  padding: 4px;
-  border-radius: 4px;
+    background: none;
+    border: none;
+    color: #a0a0a0; /* Icon color */
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
 }
 
 .sidebar-edit-button:hover {
-  background-color: #2a2a2a;
-  color: #e0e0e0;
+    background-color: #2a2a2a;
+    color: #e0e0e0;
 }
 
 .sidebar-nav {
-  flex-grow: 1;
-  padding: 8px 12px;
+    flex-grow: 1;
+    padding: 8px 12px;
 }
 
 .sidebar-nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .sidebar-nav-item {
-  display: flex;
-  align-items: center;
-  padding: 10px 12px;
-  border-radius: 6px;
-  margin-bottom: 4px;
-  color: #a0a0a0; /* Default nav item color */
-  font-weight: 500;
-  font-size: 14px;
-  text-decoration: none;
-  transition: background-color 0.15s ease, color 0.15s ease;
-  cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 6px;
+    margin-bottom: 4px;
+    color: #a0a0a0; /* Default nav item color */
+    font-weight: 500;
+    font-size: 14px;
+    text-decoration: none;
+    transition: background-color 0.15s ease, color 0.15s ease;
+    cursor: pointer;
 }
 
 .sidebar-nav-item:hover {
-  background-color: #2a2a2a;
-  color: #e0e0e0;
+    background-color: #2a2a2a;
+    color: #e0e0e0;
 }
 
 .sidebar-nav-item-active {
-  color: #e0e0e0; /* Active nav item color */
+    color: #e0e0e0; /* Active nav item color */
 }
 
 .sidebar-nav-icon {
-  margin-right: 12px;
-  opacity: 0.8;
+    margin-right: 12px;
+    opacity: 0.8;
 }
 
 .sidebar-nav-arrow {
-  margin-right: 8px;
-  color: #a0a0a0;
+    margin-right: 8px;
+    color: #a0a0a0;
 }
 
 .sidebar-footer {
-  margin-top: auto;
-  border-top: 1px solid #333;
-  padding: 10px 16px;
+    margin-top: auto;
+    border-top: 1px solid #333;
+    padding: 10px 16px;
 }
 
 .sidebar-profile {
-  display: flex;
-  align-items: center;
-  height: 36px; /* Adjust as needed */
+    display: flex;
+    align-items: center;
+    height: 36px; /* Adjust as needed */
 }
 
 .sidebar-profile-avatar {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background-color: #f5a623; /* Example accent color */
-  color: #171717; /* Dark text on avatar */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  margin-right: 8px;
-  font-size: 14px;
-  flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: #f5a623; /* Example accent color */
+    color: #171717; /* Dark text on avatar */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 8px;
+    font-size: 14px;
+    flex-shrink: 0;
 }
 
 .sidebar-profile-name {
-  font-weight: 500;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 14px;
-  color: #e0e0e0;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    color: #e0e0e0;
 }
 
 /* Add styles for overall layout if needed */
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #212121; /* Main background color */
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #212121; /* Main background color */
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+        monospace;
 }
 
 :root {
-  --bg-main: #212121;
-  --bg-sidebar: #171717;
-  --border-color: #333;
-  --text-light: #e0e0e0;
-  --text-medium: #a0a0a0;
-  --text-dark: #171717;
-  --accent-orange: #f5a623;
-  --hover-bg: #2a2a2a;
+    --bg-main: #212121;
+    --bg-sidebar: #171717;
+    --border-color: #333;
+    --text-light: #e0e0e0;
+    --text-medium: #a0a0a0;
+    --text-dark: #171717;
+    --accent-orange: #f5a623;
+    --hover-bg: #2a2a2a;
 }
 
 /* Remove default link styles */
 a {
-  text-decoration: none;
-  color: inherit;
+    text-decoration: none;
+    color: inherit;
 }
 
 /* Remove default button styles */
 button {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  color: inherit;
-  font: inherit;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: inherit;
+    font: inherit;
 }
 
 /* Remove default list styles */
 ul,
 ol {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 /* Add style for Main component */
 
-.main-content{
-  flex-grow: 1;
-  background-color: var(--bg-main);
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+.main-content {
+    flex-grow: 1;
+    background-color: var(--bg-main);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.main-body {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    padding-inline: calc(var(--spacing) * 20);
 }
 
 .chat-container {
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  padding-inline: calc(var(--spacing)* 20);
+    display: block;
+    overflow: hidden;
+    width: 100%;
 }
 
 /* Add styles for Header component */
 .main-header {
-  height: 60px; /* Adjust height */
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  /* Removed border-bottom to match image */
-  flex-shrink: 0;
-  position: sticky;
-  top: 0;
-  background-color: var(--bg-main);
-  z-index: 10;
-  padding: 0 24px; /* Adjust padding */
-  color: var(--text-light);
+    height: 60px; /* Adjust height */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* Removed border-bottom to match image */
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    background-color: var(--bg-main);
+    z-index: 10;
+    padding: 0 24px; /* Adjust padding */
+    color: var(--text-light);
 }
 
 .header-left {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .header-title-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* Align items to the start */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align items to the start */
 }
 
 .header-title {
-  font-size: 16px; /* Adjust font size */
-  font-weight: 600; /* Adjust font weight */
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
-  margin: 0; /* Remove default margin */
+    font-size: 16px; /* Adjust font size */
+    font-weight: 600; /* Adjust font weight */
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    margin: 0; /* Remove default margin */
 }
 
 .header-dropdown-arrow {
-  margin-left: 6px;
-  opacity: 0.8;
-  color: var(--text-medium);
+    margin-left: 6px;
+    opacity: 0.8;
+    color: var(--text-medium);
 }
 
 .header-subtitle {
-  font-size: 11px; /* Adjust font size */
-  color: var(--text-medium);
-  margin-top: 2px; /* Space between title and subtitle */
+    font-size: 11px; /* Adjust font size */
+    color: var(--text-medium);
+    margin-top: 2px; /* Space between title and subtitle */
 }
 
 .header-right {
-  display: flex;
-  align-items: center;
-  gap: 16px; /* Space between icons */
+    display: flex;
+    align-items: center;
+    gap: 16px; /* Space between icons */
 }
 
 .header-icon-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-medium);
-  padding: 4px;
-  border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-medium);
+    padding: 4px;
+    border-radius: 4px;
 }
 
 .header-icon-button:hover {
-  color: var(--text-light);
-  background-color: var(--hover-bg);
+    color: var(--text-light);
+    background-color: var(--hover-bg);
 }
 
 .header-avatar {
-  width: 32px; /* Adjust size */
-  height: 32px;
-  border-radius: 50%;
-  background-color: var(--accent-orange);
-  color: var(--text-dark);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 14px; /* Adjust font size */
-  flex-shrink: 0;
+    width: 32px; /* Adjust size */
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--accent-orange);
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px; /* Adjust font size */
+    flex-shrink: 0;
 }
 
 /* Add styles for ChatView and SuggestionCard */
 .chat-view {
-  /* flex-grow: 1; Remove grow */
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
+    /* flex-grow: 1; Remove grow */
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 .chat-intro {
-  text-align: center;
-  margin-bottom: 40px; /* Space below intro */
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
 }
 
 .chat-intro-logo-container {
-  width: min-content;
-  height: min-content;
-  border-radius: 50%; /* Circular background */
-  background-color: #ffffff; /* White background for logo */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow */
+    width: min-content;
+    height: min-content;
+    border-radius: 50%; /* Circular background */
+    background-color: #ffffff; /* White background for logo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
 .chat-intro-logo {
-  width: 2.25rem; /* Adjust logo size */
-  height: 2.25rem;
+    width: 2.25rem; /* Adjust logo size */
+    height: 2.25rem;
 }
 
 .chat-intro-title {
-  font-size: 2.25rem;
-  color: var(--text-light);
-  margin: 0;
+    font-size: 2.25rem;
+    color: var(--text-light);
+    margin: 0;
 }
 
 .suggestions-container {
-  width: 100%;
-  max-width: 768px; /* Max width for suggestions */
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column; /* Stack title and grid */
-  align-items: center; /* Center suggestion items */
+    width: 100%;
+    max-width: 768px; /* Max width for suggestions */
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column; /* Stack title and grid */
+    align-items: center; /* Center suggestion items */
 }
 
 .suggestions-title {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text-medium);
-  margin-bottom: 16px; /* Space below title */
-  display: flex;
-  align-items: center;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-medium);
+    margin-bottom: 16px; /* Space below title */
+    display: flex;
+    align-items: center;
 }
 
 /* Add lightning icon before title if needed */
@@ -441,206 +446,209 @@ ol {
 /*}*/
 
 .suggestions-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Responsive grid */
-  gap: 12px; /* Gap between cards */
-  width: 100%;
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(220px, 1fr)
+    ); /* Responsive grid */
+    gap: 12px; /* Gap between cards */
+    width: 100%;
 }
 
 .suggestion-card {
-  background-color: #2a2a2a; /* Card background */
-  padding: 12px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  border: 1px solid #383838; /* Subtle border */
-  display: flex; /* Align icon and text */
-  align-items: flex-start; /* Align icon to top */
+    background-color: #2a2a2a; /* Card background */
+    padding: 12px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border: 1px solid #383838; /* Subtle border */
+    display: flex; /* Align icon and text */
+    align-items: flex-start; /* Align icon to top */
 }
 
 .suggestion-card:hover {
-  background-color: #333333;
+    background-color: #333333;
 }
 
 .suggestion-icon {
-  width: 16px;
-  height: 16px;
-  margin-right: 10px;
-  color: var(--text-medium); /* Icon color */
-  flex-shrink: 0;
-  margin-top: 2px; /* Align icon slightly lower */
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+    color: var(--text-medium); /* Icon color */
+    flex-shrink: 0;
+    margin-top: 2px; /* Align icon slightly lower */
 }
 
 .suggestion-text {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .suggestion-card-title {
-  font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 2px; /* Reduced space */
-  color: var(--text-light);
-  line-height: 1.3;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 2px; /* Reduced space */
+    color: var(--text-light);
+    line-height: 1.3;
 }
 
 .suggestion-card-description {
-  font-size: 12px;
-  color: var(--text-medium);
-  line-height: 1.4;
-  margin: 0;
+    font-size: 12px;
+    color: var(--text-medium);
+    line-height: 1.4;
+    margin: 0;
 }
 
-/* Add styles for Input component */
-.chat-input-footer {
-  padding: 10px 16px 24px 16px; /* Adjust padding */
-  width: 100%;
-  /* max-width: 768px; Let container handle max-width */
-  margin: 0 auto;
-  flex-shrink: 0;
-  background-color: var(--bg-main); /* Ensure background consistency */
-  z-index: 10;
-  display: flex;
-  justify-content: center;
-}
-
-.chat-input-container {
+.input-and-sugesstion-container{
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 768px; /* Max width for input area */
   align-items: center; /* Center items horizontally */
+}
+
+.chat-input-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 768px; /* Max width for input area */
+    align-items: center; /* Center items horizontally */
 }
 
 /* Styles for suggestion pills (if you implement them) */
 .input-suggestions-pills {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 12px; /* Space above input bar */
-  /* Add styling for individual pills here */
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px; /* Space above input bar */
+    /* Add styling for individual pills here */
 }
 
+.input-bar-container {
+    display: block;
+    width: 100%;
+    padding-block: calc(var(--spacing) * 3);
+}
 .input-bar {
-  display: flex;
-  align-items: center;
-  background-color: #2a2a2a; /* Input bar background */
-  border: 1px solid #383838; /* Input bar border */
-  border-radius: 28px; /* Fully rounded corners */
-  padding-block: calc(var(--spacing)*3);
-  width: 100%;
-  min-height: 52px; /* Minimum height */
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    background-color: #2a2a2a; /* Input bar background */
+    border: 1px solid #383838; /* Input bar border */
+    border-radius: 28px; /* Fully rounded corners */
+
+    width: 100%;
+    min-height: 52px; /* Minimum height */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .input-action-button {
-  color: var(--text-medium);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 8px; /* Padding for buttons */
-  border-radius: 6px;
-  gap: 6px; /* Space between icon and text */
-  font-size: 13px;
-  white-space: nowrap;
+    color: var(--text-medium);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 8px; /* Padding for buttons */
+    border-radius: 6px;
+    gap: 6px; /* Space between icon and text */
+    font-size: 13px;
+    white-space: nowrap;
 }
 
 .input-action-button:hover {
-  background-color: #383838;
-  color: var(--text-light);
+    background-color: #383838;
+    color: var(--text-light);
 }
 
 .input-add-button {
-  margin-right: 6px; /* Space after + button */
-  padding: 8px; /* Make it slightly larger */
-  border-radius: 50%; /* Make it circular */
+    margin-right: 6px; /* Space after + button */
+    padding: 8px; /* Make it slightly larger */
+    border-radius: 50%; /* Make it circular */
 }
 
 .input-tool-icon {
-  width: 16px;
-  height: 16px;
-  opacity: 0.8;
+    width: 16px;
+    height: 16px;
+    opacity: 0.8;
 }
 
 .chat-input {
-  flex-grow: 1;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: var(--text-light);
-  font-size: 15px;
-  padding: 10px 12px; /* Padding inside input */
-  margin: 0 8px; /* Space around input */
-  min-height: 24px; /* Ensure it has some height */
+    flex-grow: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-light);
+    font-size: 15px;
+    padding: 10px 12px; /* Padding inside input */
+    margin: 0 8px; /* Space around input */
+    min-height: 24px; /* Ensure it has some height */
 }
 
 .chat-input::placeholder {
-  color: #757575; /* Placeholder color */
+    color: #757575; /* Placeholder color */
 }
 
 .input-mic-button,
 .input-support-button {
-  margin-left: 6px; /* Space before right icons */
-  padding: 8px; /* Make them slightly larger */
-  border-radius: 50%; /* Make them circular */
+    margin-left: 6px; /* Space before right icons */
+    padding: 8px; /* Make them slightly larger */
+    border-radius: 50%; /* Make them circular */
 }
 
 .input-mic-icon,
 .input-support-icon {
-  width: 20px; /* Adjust icon size */
-  height: 20px;
-  opacity: 0.8;
+    width: 20px; /* Adjust icon size */
+    height: 20px;
+    opacity: 0.8;
 }
 
 .input-suggestions-label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px; /* Slightly larger label */
-  font-weight: 500;
-  color: var(--text-medium);
-  margin-bottom: 12px; /* Space below label */
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px; /* Slightly larger label */
+    font-weight: 500;
+    color: var(--text-medium);
+    margin-bottom: 12px; /* Space below label */
 }
 
 .suggestion-label-icon {
-  width: 14px;
-  height: 14px;
-  opacity: 0.7;
+    width: 14px;
+    height: 14px;
+    opacity: 0.7;
 }
 
 /* New styles for suggestions list below input */
 .suggestions-list-container {
-  margin-inline: calc(var(--spacing)*5);
-  width: 100%;
+    margin-inline: calc(var(--spacing) * 5);
+    max-width: 42rem;
+    width: 100%;
 }
 
 .suggestions-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px; /* Space between suggestion items */
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between suggestion items */
 }
 
 .suggestion-item {
-  background-color: transparent; /* No background like cards */
-  padding: 6px 0; /* Vertical padding */
-  cursor: pointer;
-  border-radius: 6px;
-  transition: background-color 0.2s ease;
+    background-color: transparent; /* No background like cards */
+    padding: 6px 0; /* Vertical padding */
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
 }
 
 .suggestion-item:hover {
-  background-color: var(--hover-bg); /* Add subtle hover */
+    background-color: var(--hover-bg); /* Add subtle hover */
 }
 
 .suggestion-item-title {
-  font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 2px;
-  color: var(--text-light);
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 2px;
+    color: var(--text-light);
 }
 
 .suggestion-item-description {
-  font-size: 13px;
-  color: var(--text-medium);
-  line-height: 1.4;
-  margin: 0;
+    font-size: 13px;
+    color: var(--text-medium);
+    line-height: 1.4;
+    margin: 0;
 }
