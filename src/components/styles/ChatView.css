@@ -1,115 +1,66 @@
 /* --- Chat View --- */
-.chat-view {
-    flex-grow: 1;
-    overflow-y: auto; /* Allow scrolling if content exceeds height */
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center content horizontally */
-    /* Remove justify-content: center to align content top */
-    padding: 40px 0; /* Add padding top/bottom */
-    width: 100%; /* Ensure it takes full width */
-}
+@layer components {
+  .chat-view {
+    @apply flex-grow overflow-y-auto flex flex-col items-center py-10 w-full;
+  }
 
-.welcome-section {
-    text-align: center;
-    margin-bottom: 40px;
-    margin-top: 5vh; /* Push down slightly from top */
-    max-width: 90%;
-}
+  .welcome-section {
+    @apply text-center mb-10 mt-[5vh] max-w-[90%];
+  }
 
-.logo-large {
-    margin-bottom: 20px;
-    color: var(--text-light); /* Or style the SVG */
-    width: 41px;
-    height: 41px;
-    display: inline-block; /* Center the SVG */
-}
-.logo-large svg {
-    display: block;
-    fill: currentColor; /* Make SVG use text color */
-}
+  .logo-large {
+    @apply mb-5 text-[#e0e0e0] w-[41px] h-[41px] inline-block;
+  }
+  
+  .logo-large svg {
+    @apply block fill-current;
+  }
 
+  .welcome-section h2 {
+    @apply text-2xl font-semibold mb-2;
+  }
 
-.welcome-section h2 {
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 8px;
-}
+  .welcome-section .sub-heading {
+    @apply text-lg text-[#a0a0a0];
+  }
 
-.welcome-section .sub-heading {
-    font-size: 18px;
-    color: var(--text-medium);
-}
+  .suggestions-section {
+    @apply w-full max-w-[900px] mx-auto mb-5;
+  }
 
-.suggestions-section {
-    width: 100%;
-    max-width: 900px; /* Limit width of suggestions */
-    margin: 0 auto 20px auto; /* Center the section and add bottom margin */
-}
+  .suggestions-section h4 {
+    @apply text-sm font-medium text-[#a0a0a0] mb-[15px] flex items-center pl-[5px];
+  }
+  
+  .suggestions-section .suggested-icon {
+    @apply mr-2 text-base;
+  }
 
-.suggestions-section h4 {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text-medium);
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    padding-left: 5px; /* Align with cards */
-}
-.suggestions-section .suggested-icon {
-    margin-right: 8px;
-    font-size: 16px;
-}
+  .suggestion-cards {
+    @apply grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-[15px];
+  }
 
-.suggestion-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive grid */
-    gap: 15px;
-}
+  .card {
+    @apply bg-[#2a2a2a] p-[15px] rounded-lg cursor-pointer transition-colors duration-200 flex flex-col justify-between min-h-[120px] hover:bg-[#383838];
+  }
 
-.card {
-    background-color: var(--bg-card);
-    padding: 15px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    display: flex;
-    flex-direction: column; /* Stack content vertically */
-    justify-content: space-between; /* Push prompt action down */
-    min-height: 120px; /* Give cards a minimum height */
-}
+  .card h5 {
+    @apply text-[15px] font-medium mb-2;
+  }
 
-.card:hover {
-    background-color: var(--hover-bg);
-}
+  .card p {
+    @apply text-[13px] text-[#a0a0a0] leading-[1.4] flex-grow mb-[10px];
+  }
 
-.card h5 {
-    font-size: 15px;
-    font-weight: 500;
-    margin-bottom: 8px;
-}
-
-.card p {
-    font-size: 13px;
-    color: var(--text-medium);
-    line-height: 1.4;
-    flex-grow: 1; /* Allow description to take space */
-    margin-bottom: 10px;
-}
-
-.prompt-action {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 12px;
-    color: var(--text-medium);
-    margin-top: auto; /* Push to bottom */
-}
-.prompt-action .arrow-up {
-    font-size: 16px;
-    opacity: 0; /* Hidden by default */
-    transition: opacity 0.2s ease;
-}
-.card:hover .prompt-action .arrow-up {
-    opacity: 1; /* Show on hover */
+  .prompt-action {
+    @apply flex justify-between items-center text-xs text-[#a0a0a0] mt-auto;
+  }
+  
+  .prompt-action .arrow-up {
+    @apply text-base opacity-0 transition-opacity duration-200;
+  }
+  
+  .card:hover .prompt-action .arrow-up {
+    @apply opacity-100;
+  }
 }

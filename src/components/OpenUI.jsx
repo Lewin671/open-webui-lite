@@ -1,11 +1,14 @@
 import React from 'react';
-import './styles/base.css';
 import Sidebar from './Sidebar';
 import Main from './Main';
 
 const OpenUI = () => {
   return (
-    <div className="app-container">
+    <div style={{
+      display: 'flex',
+      width: '100%',
+      height: '100%'
+    }}>
       <Sidebar />
       <Main />
     </div>

@@ -1,107 +1,54 @@
-.sidebar {
-    width: 260px;
-    background-color: var(--bg-sidebar);
-    display: flex;
-    flex-direction: column;
-    padding: 12px;
-    border-right: 1px solid var(--border-color);
-    flex-shrink: 0; /* Prevent sidebar from shrinking */
-}
+@layer components {
+  .sidebar {
+    @apply w-[260px] bg-sidebar flex flex-col p-3 border-r border-border flex-shrink-0;
+  }
 
-.sidebar-header {
-    margin-bottom: 20px;
-}
+  .sidebar-header {
+    @apply mb-5;
+  }
 
-.new-chat-btn {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    padding: 8px 12px;
-    border-radius: 6px;
-    border: 1px solid var(--border-color);
-    font-weight: 500;
-}
-.new-chat-btn:hover {
-    background-color: var(--hover-bg);
-}
+  .new-chat-btn {
+    @apply flex items-center w-full px-3 py-2 rounded-md border border-border font-medium hover:bg-hover;
+  }
 
-.new-chat-btn .icon {
-    margin-right: 8px;
-    color: var(--text-medium);
-}
-.new-chat-btn .logo-icon { /* Specific style if needed */
-    font-weight: bold;
-    width: 20px; /* Adjust size as needed */
-    height: 20px;
-    background-color: #fff; /* Placeholder background */
-    color: #000; /* Placeholder text color */
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    margin-right: 8px;
-}
-.new-chat-btn .edit-icon,
-.new-chat-btn .menu-icon {
-    margin-left: auto;
-    margin-right: 0;
-    padding-left: 8px;
-}
+  .new-chat-btn .icon {
+    @apply mr-2 text-text-medium;
+  }
 
-.sidebar-nav {
-    flex-grow: 1;
-}
+  .new-chat-btn .logo-icon {
+    @apply font-bold w-5 h-5 bg-white text-black rounded-full inline-flex items-center justify-center text-xs mr-2;
+  }
 
-.sidebar-nav ul li a {
-    display: flex;
-    align-items: center;
-    padding: 10px 12px;
-    border-radius: 6px;
-    margin-bottom: 4px;
-    color: var(--text-medium);
-}
-.sidebar-nav ul li a:hover {
-    background-color: var(--hover-bg);
-    color: var(--text-light);
-}
-.sidebar-nav ul li a .icon {
-    margin-right: 10px;
-    font-size: 16px; /* Adjust icon size */
-    width: 1.2em; /* Give icons consistent width */
-    text-align: center;
-}
+  .new-chat-btn .edit-icon,
+  .new-chat-btn .menu-icon {
+    @apply ml-auto mr-0 pl-2;
+  }
 
-.sidebar-footer {
-    margin-top: auto; /* Pushes footer to the bottom */
-    padding-top: 10px;
-    border-top: 1px solid var(--border-color);
-}
+  .sidebar-nav {
+    @apply flex-grow;
+  }
 
-.user-profile {
-    display: flex;
-    align-items: center;
-    padding: 10px 5px;
-}
+  .sidebar-nav ul li a {
+    @apply flex items-center px-3 py-2.5 rounded-md mb-1 text-text-medium hover:bg-hover hover:text-text-light;
+  }
 
-.avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background-color: var(--accent-orange);
-    color: var(--text-dark);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    margin-right: 10px;
-    font-size: 12px;
-    flex-shrink: 0;
-}
+  .sidebar-nav ul li a .icon {
+    @apply mr-2.5 text-base w-[1.2em] text-center;
+  }
 
-.user-name {
-    font-weight: 500;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  .sidebar-footer {
+    @apply mt-auto pt-2.5 border-t border-border;
+  }
+
+  .user-profile {
+    @apply flex items-center px-1.5 py-2.5;
+  }
+
+  .avatar {
+    @apply w-8 h-8 rounded-full bg-accent-orange text-text-dark flex items-center justify-center font-bold mr-2.5 text-xs flex-shrink-0;
+  }
+
+  .user-name {
+    @apply font-medium whitespace-nowrap overflow-hidden text-ellipsis;
+  }
 }

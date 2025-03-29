@@ -1,23 +1,27 @@
-/* 移除默认样式，使用Tailwind CSS */
-#root {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  text-align: left;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* App.css 中的样式已通过 Tailwind 在 index.css 中实现 */
+@layer components {
+  .logo {
+    height: 6em;
+    padding: 1.5em;
+    will-change: filter;
+    transition: filter 300ms;
+  }
+  
+  .logo:hover {
+    filter: drop-shadow(0 0 2em #646cffaa);
+  }
+  
+  .logo.react:hover {
+    filter: drop-shadow(0 0 2em #61dafbaa);
+  }
+  
+  .card {
+    padding: 2em;
+  }
+  
+  .read-the-docs {
+    color: #888;
+  }
 }
 
 @keyframes logo-spin {
@@ -35,10 +39,27 @@
   }
 }
 
-.card {
-  padding: 2em;
+/* 自定义样式 */
+.card:hover {
+  background-color: var(--hover-bg);
 }
 
-.read-the-docs {
-  color: #888;
+.prompt-action .arrow-up {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.card:hover .prompt-action .arrow-up {
+  opacity: 1;
+}
+
+/* 侧边栏链接悬停效果 */
+aside a:hover {
+  background-color: var(--hover-bg);
+  color: var(--text-light);
+}
+
+/* 新聊天按钮悬停效果 */
+aside button:hover {
+  background-color: var(--hover-bg);
 }

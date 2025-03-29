@@ -1,31 +1,9 @@
-.main-panel {
-    flex-grow: 1;
-    background-color: var(--bg-main);
-    display: flex;
-    flex-direction: column;
-    position: relative; /* For absolute positioning of help button */
-    padding: 0 20px; /* Add some horizontal padding */
-}
+@layer components {
+  .main-panel {
+    @apply flex-grow bg-main flex flex-col relative px-5;
+  }
 
-/* --- Help Button --- */
-.help-button {
-    position: fixed; /* Fixed positioning relative to viewport */
-    bottom: 15px;
-    right: 15px;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
-    color: var(--text-medium);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    font-weight: bold;
-    z-index: 20; /* Ensure it's above other elements */
-}
-.help-button:hover {
-    background-color: var(--hover-bg);
-    color: var(--text-light);
+  .help-button {
+    @apply fixed bottom-[15px] right-[15px] w-7 h-7 rounded-full bg-card border border-border text-text-medium flex items-center justify-center text-sm font-bold z-20 hover:bg-hover hover:text-text-light;
+  }
 }
