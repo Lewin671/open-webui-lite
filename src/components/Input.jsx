@@ -2,7 +2,7 @@ import React from 'react';
 
 const Input = () => {
   return (
-    <div className="text-base font-normal w-full py-3">
+    <div className="text-base font-normal w-full py-6">
       <div className="w-full font-primary">
         <div className="mx-auto inset-x-0 bg-transparent flex justify-center">
           <div className="flex flex-col max-w-3xl w-full px-3">

@@ -13,7 +13,7 @@ const ChatHeader = () => {
             />
           </div>
         </div>
-        <div className='text-3xl @sm:text-4xl line-clamp-1'>deepseek-chat</div>
+        <div className='text-4xl line-clamp-1'>deepseek-chat</div>
       </div>
     </section>
   )
