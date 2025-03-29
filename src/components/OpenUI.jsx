@@ -1,20 +1,14 @@
-import React from 'react';
-import Sidebar from './Sidebar';
-import Main from './Main';
+import React from 'react'
+import Sidebar from './Sidebar'
+import Main from './Main'
 
 const OpenUI = () => {
   return (
-    <div style={{
-      display: 'flex',
-      width: '100%',
-      height: '100vh',
-      overflow: 'hidden',
-      backgroundColor: 'var(--bg-main)'
-    }}>
+    <div className='flex w-full h-screen overflow-hidden bg-white dark:bg-black'>
       <Sidebar />
       <Main />
     </div>
-  );
-};
+  )
+}
 
-export default OpenUI;
+export default OpenUI
