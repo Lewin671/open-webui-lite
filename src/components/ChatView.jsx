@@ -23,7 +23,7 @@ const ChatView = () => {
            {/* Using splash-dark.png from the public folder */}
            <img src="/splash.png" alt="DeepSeek Logo" className="chat-intro-logo" />
          </div>
-         <h2 className="chat-intro-title">deepseek-chat</h2>
+         <div className="chat-intro-title">deepseek-chat</div>
       </div>
 
       <div className="suggestions-container">
