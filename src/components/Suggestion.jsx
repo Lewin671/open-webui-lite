@@ -3,8 +3,12 @@ import React from 'react'
 const SuggestionItem = ({ title, description }) => {
   return (
     <div className='bg-transparent py-1.5 cursor-pointer rounded-md transition-colors duration-200 hover:bg-primary-light dark:hover:bg-primary-dark'>
-      <h5 className='text-sm font-medium mb-0.5 dark:text-gray-300 dark:group-hover:text-gray-200 transition line-clamp-1'>{title}</h5>
-      <p className='text-xs text-gray-500 font-normal line-clamp-1 m-0'>{description}</p>
+      <h5 className='text-sm font-medium mb-0.5 text-[#cdcdcd] transition line-clamp-1'>
+        {title}
+      </h5>
+      <p className='text-xs text-[#9b9b9b] font-normal line-clamp-1 m-0'>
+        {description}
+      </p>
     </div>
   )
 }
@@ -16,7 +20,7 @@ const defaultSuggestions = [
   },
   {
     title: 'Give me ideas',
-    description: 'for what to do with my kids\' art'
+    description: "for what to do with my kids' art"
   },
   {
     title: 'Grammar check',
@@ -27,9 +31,20 @@ const defaultSuggestions = [
 const Suggestion = ({ suggestions = defaultSuggestions }) => {
   return (
     <div className='mx-auto max-w-2xl w-full'>
-      <div className='mb-1 flex gap-1 text-xs font-medium items-center text-gray-400 dark:text-gray-600'>
-        <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth='1.5' stroke='currentColor' className='size-3'>
-          <path strokeLinecap='round' strokeLinejoin='round' d='m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z' />
+      <div className='mb-1 flex gap-1 text-xs font-medium items-center text-[#676767]'>
+        <svg
+          xmlns='http://www.w3.org/2000/svg'
+          fill='none'
+          viewBox='0 0 24 24'
+          strokeWidth='1.5'
+          stroke='currentColor'
+          className='size-3'
+        >
+          <path
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            d='m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z'
+          />
         </svg>
         <span>建议</span>
       </div>
