@@ -4,7 +4,7 @@ import Main from './Main'
 
 const OpenUI = () => {
   return (
-    <div className='flex w-full h-screen overflow-hidden bg-white dark:bg-black'>
+    <div className="flex w-full h-screen overflow-hidden bg-[#212121]">
       <Sidebar />
       <Main />
     </div>
