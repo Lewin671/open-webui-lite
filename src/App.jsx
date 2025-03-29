@@ -5,7 +5,7 @@ import './App.css'
 
 function App () {
   return (
-    <div className='flex w-full h-screen overflow-hidden bg-primary'>
+    <div className='flex w-full h-screen overflow-hidden text-black dark:text-gray-100 bg-primary-light dark:bg-primary-dark'>
       <Sidebar />
       <ChatContainer />
     </div>
