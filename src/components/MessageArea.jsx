@@ -1,6 +1,7 @@
 import React from 'react';
 import ChatHeader from './ChatHeader';
 import Input from './Input';
+import Suggestion from './Suggestion';
 
 const MessageArea = () => {
   return (
@@ -8,6 +9,7 @@ const MessageArea = () => {
       <div className="block overflow-hidden w-full">
         <ChatHeader />
         <Input />
+        <Suggestion />
       </div>
     </div>
   );
