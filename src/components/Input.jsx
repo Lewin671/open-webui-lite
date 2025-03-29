@@ -11,21 +11,6 @@ const SuggestionItem = ({ title, description }) => {
 }
 
 const Input = () => {
-  // Example suggestions data
-  const suggestions = [
-    {
-      title: 'Grammar check',
-      description: 'rewrite it for better readability'
-    },
-    {
-      title: 'Explain options trading',
-      description: "if I'm familiar with buying and selling stocks"
-    },
-    {
-      title: 'Show me a code snippet',
-      description: "of a website's sticky header"
-    }
-  ]
 
   return (
     <div className='flex flex-col w-full items-center'>
@@ -103,37 +88,7 @@ const Input = () => {
         </div>
       </div>
 
-      {/* Suggestions Section Below Input */}
-      <div className='mx-5 max-w-[42rem] w-full'>
-        <div className='flex items-center gap-1.5 text-sm font-medium  mb-3'>
-          <svg
-            width='14'
-            height='14'
-            viewBox='0 0 24 24'
-            fill='none'
-            xmlns='http://www.w3.org/2000/svg'
-            className='w-3.5 h-3.5 opacity-70'
-          >
-            <path
-              d='M10 19L12 13H9L14 5L12 11H15L10 19Z'
-              stroke='currentColor'
-              strokeWidth='2'
-              strokeLinecap='round'
-              strokeLinejoin='round'
-            />
-          </svg>
-          <span>建议</span>
-        </div>
-        <div className='flex flex-col gap-2.5'>
-          {suggestions.map((suggestion, index) => (
-            <SuggestionItem
-              key={index}
-              title={suggestion.title}
-              description={suggestion.description}
-            />
-          ))}
-        </div>
-      </div>
+      
     </div>
   )
 }
