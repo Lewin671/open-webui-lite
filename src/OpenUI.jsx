@@ -1,6 +1,6 @@
 import React from 'react';
-import Sidebar from './Sidebar';
-import Main from './Main';
+import Sidebar from './components/Sidebar';
+import Main from './components/Main';
 
 const OpenUI = () => {
   return (
@@ -17,4 +17,4 @@ const OpenUI = () => {
   );
 };
 
-export default OpenUI;
+export default OpenUI; 
