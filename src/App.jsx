@@ -1,25 +1,15 @@
-import React from 'react';
-import Header from './components/Header';
-import Sidebar from './components/Sidebar';
-import ChatView from './components/ChatView';
-import Input from './components/Input';
-import './App.css';
+import React from 'react'
+import Sidebar from './components/Sidebar'
+import ChatContainer from './components/ChatContainer'
+import './App.css'
 
-function App() {
+function App () {
   return (
-    <div className="flex w-full h-screen overflow-hidden bg-primary">
+    <div className='flex w-full h-screen overflow-hidden bg-primary'>
       <Sidebar />
-      <main className="flex-grow flex flex-col h-screen font-sans">
-        <Header />
-        <div className="flex flex-1 w-full justify-center items-center px-20">
-          <div className="block overflow-hidden w-full">
-            <ChatView />
-            <Input />
-          </div>
-        </div>
-      </main>
+      <ChatContainer />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
