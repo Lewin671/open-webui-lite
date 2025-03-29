@@ -1,50 +1,25 @@
 .main-header {
-    padding: 15px 0;
-    display: flex;
-    flex-direction: column; /* Stack items vertically */
-    align-items: flex-start; /* Align items to the left */
-    border-bottom: 1px solid var(--border-color);
-    flex-shrink: 0; /* Prevent header from shrinking */
-    position: sticky; /* Make header sticky */
-    top: 0;
-    background-color: var(--bg-main); /* Ensure background covers content when sticky */
-    z-index: 10;
+    @apply py-4 flex flex-col items-start border-b border-[#333333] flex-shrink-0 sticky top-0 bg-[#1e1e1e] z-10;
 }
 
 .model-selector {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px; /* Space below model selector */
+    @apply flex items-center mb-2;
 }
 
 .model-selector h1 {
-    font-size: 16px;
-    font-weight: 500;
-    margin-right: 8px;
-    display: flex;
-    align-items: center;
-    white-space: nowrap;
+    @apply text-base font-medium mr-2 flex items-center whitespace-nowrap;
 }
 .model-selector .dropdown-arrow,
 .model-selector .plus-icon {
-    font-size: 12px;
-    color: var(--text-medium);
-    margin-left: 5px;
-    cursor: pointer;
+    @apply text-xs text-[#a0a0a0] ml-1.5 cursor-pointer;
 }
 
 .default-text {
-    font-size: 12px;
-    color: var(--text-medium);
+    @apply text-xs text-[#a0a0a0];
 }
 
 .status-banner {
-    font-size: 13px;
-    color: var(--text-medium);
-    width: 100%; /* Ensure it takes full width */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    @apply text-sm text-[#a0a0a0] w-full whitespace-nowrap overflow-hidden truncate;
 }
 
 .success-badge {

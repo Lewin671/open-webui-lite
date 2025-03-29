@@ -1,50 +1,30 @@
 /* --- Chat View --- */
 .chat-view {
-    flex-grow: 1;
-    overflow-y: auto; /* Allow scrolling if content exceeds height */
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center content horizontally */
-    /* Remove justify-content: center to align content top */
-    padding: 40px 0; /* Add padding top/bottom */
-    width: 100%; /* Ensure it takes full width */
+    @apply flex-grow overflow-y-auto flex flex-col items-center py-10 w-full;
 }
 
 .welcome-section {
-    text-align: center;
-    margin-bottom: 40px;
-    margin-top: 5vh; /* Push down slightly from top */
-    max-width: 90%;
+    @apply text-center mb-10 mt-[5vh] max-w-[90%];
 }
 
 .logo-large {
-    margin-bottom: 20px;
-    color: var(--text-light); /* Or style the SVG */
-    width: 41px;
-    height: 41px;
-    display: inline-block; /* Center the SVG */
+    @apply mb-5 text-[#e0e0e0] w-[41px] h-[41px] inline-block;
 }
 .logo-large svg {
-    display: block;
-    fill: currentColor; /* Make SVG use text color */
+    @apply block fill-current;
 }
 
 
 .welcome-section h2 {
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 8px;
+    @apply text-2xl font-semibold mb-2;
 }
 
 .welcome-section .sub-heading {
-    font-size: 18px;
-    color: var(--text-medium);
+    @apply text-lg text-[#a0a0a0];
 }
 
 .suggestions-section {
-    width: 100%;
-    max-width: 900px; /* Limit width of suggestions */
-    margin: 0 auto 20px auto; /* Center the section and add bottom margin */
+    @apply w-full max-w-[900px] mx-auto mb-5;
 }
 
 .suggestions-section h4 {

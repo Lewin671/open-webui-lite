@@ -18,36 +18,22 @@
 }
 
 a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+  @apply font-medium text-[#646cff] no-underline;
 }
 a:hover {
-  color: #535bf2;
+  @apply text-[#535bf2];
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  @apply m-0 flex items-center min-w-[320px] min-h-screen;
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  @apply text-5xl leading-tight;
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
+  @apply rounded-lg border border-transparent px-5 py-2.5 text-base font-medium font-sans bg-[#1a1a1a] cursor-pointer;
   transition: border-color 0.25s;
 }
 button:hover {
