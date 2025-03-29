@@ -5,7 +5,7 @@ import Input from './Input';
 
 const Main = () => {
   return (
-    <main className="flex-grow bg-[#212121] flex flex-col h-screen">
+    <main className="flex-grow flex flex-col h-screen font-sans">
       <Header />
       <div className="flex flex-1 w-full justify-center items-center px-20">
         <div className="block overflow-hidden w-full">

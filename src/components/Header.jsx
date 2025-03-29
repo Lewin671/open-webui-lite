@@ -2,7 +2,7 @@ import React from 'react';
 
 const Header = () => {
   return (
-    <header className="h-[60px] flex items-center justify-between sticky top-0 bg-[#212121] z-10 px-6 text-[#e0e0e0]">
+    <header className="h-[60px] flex items-center justify-between sticky top-0 z-10 px-6 text-[#e0e0e0]">
       <div className="flex items-center">
         <div className="flex flex-col items-start">
           <h1 className="text-base font-semibold flex items-center whitespace-nowrap m-0">

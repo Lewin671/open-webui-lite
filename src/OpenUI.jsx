@@ -4,13 +4,7 @@ import Main from './components/Main';
 
 const OpenUI = () => {
   return (
-    <div style={{
-      display: 'flex',
-      width: '100%',
-      height: '100vh',
-      overflow: 'hidden',
-      backgroundColor: 'var(--bg-main)'
-    }}>
+    <div className="flex w-full h-screen overflow-hidden">
       <Sidebar />
       <Main />
     </div>

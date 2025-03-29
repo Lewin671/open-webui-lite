@@ -4,20 +4,19 @@
 
 /* Custom scrollbar */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #212121; }
 ::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #555; }
 
 /* Global variables */
 :root {
-    --bg-main: #212121; --bg-sidebar: #171717; --border-color: #333;
+     --bg-sidebar: #171717; --border-color: #333;
     --text-light: #e0e0e0; --text-medium: #a0a0a0; --text-dark: #171717;
     --accent-orange: #f5a623; --hover-bg: #2a2a2a; --spacing: 4px;
 }
 
 /* Base resets */
 body {
-    margin: 0; font-family: Archivo, sans-serif;
+    margin: 0;
     -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
 }
 
