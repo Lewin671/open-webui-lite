@@ -2,18 +2,25 @@ import React from 'react'
 
 const ChatHeader = () => {
   return (
-    <section className='overflow-hidden flex flex-col items-center justify-center w-full'>
-      <div className='text-center flex flex-row items-center justify-center gap-5'>
-        <div className='w-10 h-10 flex items-center justify-center rounded-full shadow-sm overflow-hidden'>
-          <div className='w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-gray-200 overflow-hidden'>
-            <img
-              src='/favicon.png'
-              alt='OpenUI Logo'
-              className='w-full h-full object-cover bg-white'
-            />
+    <section className="w-full flex justify-center"> {/* 新增外层居中容器 */}
+      <div className="flex w-fit px-5 flex-row justify-center items-center gap-3 @sm:gap-3.5">
+        <div className="flex shrink-0 justify-center">
+          <div className="flex -space-x-4 mb-0.5">
+            <button
+              aria-label="OpenUI Logo"
+              className="flex transition-opacity hover:opacity-80"
+            >
+              <img
+                src="/favicon.png"
+                alt="OpenUI Logo"
+                crossOrigin="anonymous"
+                className="size-9 @sm:size-10 rounded-full border border-gray-100 dark:border-none"
+                draggable={false}
+              />
+            </button>
           </div>
         </div>
-        <div className='text-4xl line-clamp-1'>deepseek-chat</div>
+        <h1 className="text-4xl line-clamp-1">deepseek-chat</h1>
       </div>
     </section>
   )

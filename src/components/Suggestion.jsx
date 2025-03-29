@@ -4,10 +4,10 @@ const SuggestionItem = ({ title, description }) => {
   return (
     <button className="flex flex-col w-full justify-between px-3 py-2 rounded-xl bg-transparent hover:bg-black/5 dark:hover:bg-white/5 transition group text-left">
       <div className="flex flex-col">
-        <div className="font-medium text-gray-900 dark:text-gray-300 dark:group-hover:text-gray-200 transition line-clamp-1">
+        <div className="font-medium text-[#4E4E4E] dark:text-[#cdcdcd]  transition line-clamp-1">
           {title}
         </div>
-        <div className="text-xs text-gray-500 font-normal line-clamp-1">
+        <div className="text-xs text-[#9b9b9b] font-normal line-clamp-1">
           {description}
         </div>
       </div>
@@ -51,7 +51,7 @@ const Suggestion = ({ suggestions = defaultSuggestions }) => {
   return (
     <div className="mx-auto max-w-2xl w-full font-primary">
       <div className="mx-5">
-        <div className="mb-1 flex gap-1 text-xs font-medium items-center text-gray-400 dark:text-gray-600">
+        <div className="mb-1 flex gap-1 text-xs font-medium items-center text-[#9b9b9b] dark:text-[#676767]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
