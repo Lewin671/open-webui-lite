@@ -276,11 +276,10 @@ ol {
   display: flex;
   flex-direction: column;
   align-items: center; /* Center children horizontally */
+  justify-content: center; /* Center children vertically */
   overflow: hidden;
   height: 100vh;
-  /* Remove justify-content to allow natural vertical flow */
-  /* justify-content: flex-end; */
-  padding-top: 15vh; /* Add padding at the top to push content down */
+  padding-inline: calc(var(--spacing)* 20);
 }
 
 /* Add styles for Header component */
@@ -374,22 +373,21 @@ ol {
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding: 20px 24px; /* Adjust padding */
-  margin-bottom: 30px; /* Add space below chat view / intro */
 }
 
 .chat-intro {
   text-align: center;
   margin-bottom: 40px; /* Space below intro */
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
+  gap: 20px;
 }
 
 .chat-intro-logo-container {
-  margin-bottom: 16px; /* Space below logo */
-  width: 56px; /* Adjust logo container size */
-  height: 56px;
+  width: min-content;
+  height: min-content;
   border-radius: 50%; /* Circular background */
   background-color: #ffffff; /* White background for logo */
   display: flex;
@@ -400,13 +398,12 @@ ol {
 }
 
 .chat-intro-logo {
-  width: 36px; /* Adjust logo size */
-  height: 36px;
+  width: 2.25rem; /* Adjust logo size */
+  height: 2.25rem;
 }
 
 .chat-intro-title {
-  font-size: 28px; /* Adjust title size */
-  font-weight: 600;
+  font-size: 2.25rem;
   color: var(--text-light);
   margin: 0;
 }
