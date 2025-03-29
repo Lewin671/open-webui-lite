@@ -526,7 +526,7 @@ ol {
   background-color: #2a2a2a; /* Input bar background */
   border: 1px solid #383838; /* Input bar border */
   border-radius: 28px; /* Fully rounded corners */
-  padding: 6px 10px; /* Padding inside the bar */
+  padding-block: calc(var(--spacing)*3);
   width: 100%;
   min-height: 52px; /* Minimum height */
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
@@ -609,9 +609,8 @@ ol {
 
 /* New styles for suggestions list below input */
 .suggestions-list-container {
-  margin-top: 20px; /* Space above suggestions section */
+  margin-inline: calc(var(--spacing)*5);
   width: 100%;
-  max-width: 600px; /* Adjust max-width as needed */
 }
 
 .suggestions-list {

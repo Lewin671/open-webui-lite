@@ -6,11 +6,10 @@ import Input from './Input';
 const Main = () => {
   return (
     <main className="main-content">
-      {/* Remove Header component */}
       <Header />
       <div className='chat-container'>
-      <ChatView />
-      <Input />
+        <ChatView />
+        <Input />
       </div>
     </main>
   );
