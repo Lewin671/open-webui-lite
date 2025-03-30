@@ -2,7 +2,7 @@ import React from 'react'
 
 const ChatHeader = () => {
   return (
-    <section className="w-full flex justify-center"> {/* 新增外层居中容器 */}
+    <section className="w-full flex justify-center py-3"> {/* 新增外层居中容器 */}
       <div className="flex w-fit px-5 flex-row justify-center items-center gap-3 @sm:gap-3.5">
         <div className="flex shrink-0 justify-center">
           <div className="flex -space-x-4 mb-0.5">
