@@ -2,7 +2,7 @@ import React from 'react';
 
 const TopNavigation = () => {
   return (
-    <div className="px-1.5 flex justify-between space-x-1 text-[#b4b4b4]">
+    <div className="px-1.5 flex justify-between space-x-1 text-[#262626] dark:text-[#b4b4b4]">
       {/* 菜单按钮 */}
       <button className="cursor-pointer p-[7px] flex rounded-xl hover:bg-gray-100 dark:hover:bg-gray-900 transition">
         <div className="m-auto self-center">
