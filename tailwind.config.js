@@ -6,7 +6,8 @@ export default {
     extend: {
       colors: {
           'primary-light': '#ffffff', // 亮色模式下的主色
-          'primary-dark': '#171717'
+          'primary-dark': '#171717',
+          'tip': '#9b9b9b'
       },
       fontFamily: {
         sans: ['Archivo', 'sans-serif']

@@ -3,7 +3,7 @@ import React from 'react';
 const Header = () => {
   return (
     <nav className="sticky top-0 z-30 w-full px-1.5 py-1.5 -mb-8 flex items-center drag-region" style={{ appRegion: 'drag' }}>
-      <div className="bg-linear-to-b via-50% from-white via-white to-transparent dark:from-gray-900 dark:via-gray-900 dark:to-transparent pointer-events-none absolute inset-0 -bottom-7 z-[-1]"></div>
+      <div className="via-50% from-white via-white to-transparent dark:from-gray-900 dark:via-gray-900 dark:to-transparent pointer-events-none absolute inset-0 -bottom-7 z-[-1]"></div>
       <div className="flex max-w-full w-full mx-auto px-1 pt-0.5 bg-transparent">
         <div className="flex items-center w-full max-w-full">
           <div className="md:hidden mr-1 self-start flex flex-none items-center text-gray-600 dark:text-gray-400">
@@ -41,7 +41,7 @@ const Header = () => {
                 </div>
               </div>
             </div>
-            <div className="absolute text-left mt-[1px] ml-1 text-[0.7rem] text-gray-500 font-primary">
+            <div className="absolute text-left mt-[1px] ml-1 text-[0.7rem] text-tip font-primary">
               <button>设为默认</button>
             </div>
           </div>

@@ -8,7 +8,7 @@ const SuggestionItem = ({ title, description }) => {
         <div className="font-medium text-[#4E4E4E] dark:text-[#cdcdcd] transition line-clamp-1">
           {title}
         </div>
-        <div className="text-xs text-[#9b9b9b] font-normal line-clamp-1">
+        <div className="text-xs text-tip font-normal line-clamp-1">
           {description}
         </div>
       </div>
