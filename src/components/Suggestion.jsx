@@ -51,7 +51,7 @@ const Suggestion = ({ suggestions = defaultSuggestions }) => {
   return (
     <div className="mx-auto max-w-2xl w-full font-primary">
       <div className="mx-5">
-        <div className="mb-1 flex gap-1 text-xs font-medium items-center text-[#9b9b9b] dark:text-[#676767]">
+        <div className="mb-1 flex gap-1 text-xs font-medium items-center text-[#b4b4b4] dark:text-[#676767]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
