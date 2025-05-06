@@ -1,9 +1,12 @@
 import React from 'react';
 
 // SuggestionItem component remains the same
-const SuggestionItem = ({ title, description }) => {
+const SuggestionItem = ({ title, description, onClick }) => {
   return (
-    <button className="flex flex-col w-full justify-between px-3 py-2 rounded-xl bg-transparent hover:bg-black/5 dark:hover:bg-white/5 transition group text-left">
+    <button 
+      onClick={() => onClick({ title, description })} 
+      className="flex flex-col w-full justify-between px-3 py-2 rounded-xl bg-transparent hover:bg-black/5 dark:hover:bg-white/5 transition group text-left"
+    >
       <div className="flex flex-col">
         <div className="font-medium text-[#4E4E4E] dark:text-[#cdcdcd] transition line-clamp-1">
           {title}
@@ -48,7 +51,7 @@ const defaultSuggestions = [
 ];
 
 
-const Suggestion = ({ suggestions = defaultSuggestions }) => {
+const Suggestion = ({ suggestions = defaultSuggestions, onSuggestionClick }) => {
   return (
     <div className="mx-auto max-w-2xl w-full font-primary">
       <div className="mx-5">
@@ -65,6 +68,7 @@ const Suggestion = ({ suggestions = defaultSuggestions }) => {
               key={index}
               title={suggestion.title}
               description={suggestion.description}
+              onClick={onSuggestionClick} // Pass the handler to SuggestionItem
             />
           ))}
         </div>
