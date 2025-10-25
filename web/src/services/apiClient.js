@@ -16,7 +16,16 @@ class TokenManager {
     }
 
     setTokens(accessToken, refreshToken) {
-        console.log('Setting tokens:', { accessToken: accessToken?.substring(0, 20) + '...', refreshToken: refreshToken?.substring(0, 20) + '...' });
+        console.log('Setting tokens:', { 
+            accessToken: accessToken ? `${accessToken.substring(0, 20)}... (length: ${accessToken.length})` : 'null',
+            refreshToken: refreshToken ? `${refreshToken.substring(0, 20)}... (length: ${refreshToken.length})` : 'null'
+        });
+        
+        if (!accessToken) {
+            console.warn('Warning: Attempting to set null or empty access token');
+            return;
+        }
+
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
         localStorage.setItem('access_token', accessToken);
@@ -76,9 +85,15 @@ apiClient.interceptors.request.use(
             const token = tokenManager.getAccessToken();
             if (token) {
                 config.headers.Authorization = `Bearer ${token}`;
-                console.log('Adding Authorization header:', `Bearer ${token.substring(0, 20)}...`);
+                console.log('Request details:', {
+                    url: config.url,
+                    method: config.method,
+                    tokenLength: token.length,
+                    tokenPrefix: token.substring(0, 20),
+                    fullHeader: `Bearer ${token}`
+                });
             } else {
-                console.log('No token found for request to:', config.url);
+                console.warn('No token found for request to:', config.url);
             }
         }
         return config;

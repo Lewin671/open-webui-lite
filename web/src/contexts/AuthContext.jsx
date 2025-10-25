@@ -93,11 +93,30 @@ export function AuthProvider({ children }) {
     const login = async (email, password) => {
         dispatch({ type: 'LOGIN_START' });
 
-        const result = await authService.login(email, password);
+        try {
+            const result = await authService.login(email, password);
+            console.log('Login result:', result);  // Add debug log
 
-        if (result.success) {
+            if (!result.success) {
+                dispatch({
+                    type: 'LOGIN_FAILURE',
+                    payload: { error: result.error },
+                });
+                return;
+            }
+
+            if (!result.data?.accessToken) {
+                dispatch({
+                    type: 'LOGIN_FAILURE',
+                    payload: { error: 'No access token received from server' },
+                });
+                return;
+            }
+
             // Get user info after successful login
             const userResult = await authService.getUserInfo();
+            console.log('User info result:', userResult);  // Add debug log
+
             if (userResult.success) {
                 dispatch({
                     type: 'LOGIN_SUCCESS',
@@ -109,10 +128,11 @@ export function AuthProvider({ children }) {
                     payload: { error: userResult.error },
                 });
             }
-        } else {
+        } catch (error) {
+            console.error('Login error:', error);  // Add debug log
             dispatch({
                 type: 'LOGIN_FAILURE',
-                payload: { error: result.error },
+                payload: { error: error.message || 'An unexpected error occurred' },
             });
         }
     };

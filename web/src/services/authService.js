@@ -4,28 +4,58 @@ import { ENDPOINTS } from './config.js';
 class AuthService {
     async login(email, password) {
         try {
+            console.log('Attempting login with email:', email);
+            
             const response = await apiClient.post(ENDPOINTS.LOGIN, {
                 email,
                 password,
             });
 
-            const { access_token, refresh_token, expires_in } = response.data;
+            console.log('Login response:', {
+                status: response.status,
+                hasData: !!response.data,
+                dataKeys: response.data ? Object.keys(response.data) : []
+            });
+
+            if (!response.data) {
+                throw new Error('No data received from server');
+            }
+
+            const { accessToken, refreshToken, expiresIn } = response.data;
+
+            if (!accessToken) {
+                throw new Error('No access token received from server');
+            }
+
+            console.log('Tokens received:', {
+                hasAccessToken: !!accessToken,
+                accessTokenLength: accessToken?.length,
+                hasRefreshToken: !!refreshToken,
+                refreshTokenLength: refreshToken?.length,
+                expiresIn: expiresIn
+            });
 
             // Store tokens
-            tokenManager.setTokens(access_token, refresh_token);
+            tokenManager.setTokens(accessToken, refreshToken);
 
             return {
                 success: true,
                 data: {
-                    accessToken: access_token,
-                    refreshToken: refresh_token,
-                    expiresIn: expires_in,
+                    accessToken: accessToken,
+                    refreshToken: refreshToken,
+                    expiresIn: expiresIn,
                 },
             };
         } catch (error) {
+            console.error('Login error:', {
+                message: error.message,
+                response: error.response?.data,
+                status: error.response?.status
+            });
+            
             return {
                 success: false,
-                error: error.response?.data?.error || 'Login failed',
+                error: error.response?.data?.error || error.message || 'Login failed',
                 code: error.response?.data?.code || 'LOGIN_ERROR',
             };
         }
