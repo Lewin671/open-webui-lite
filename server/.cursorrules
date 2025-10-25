@@ -1,0 +1,228 @@
+# Open WebUI Lite - Backend Agent Rules
+
+## Backend-Specific Development Guidelines
+
+### Go Development Standards
+- Use Go 1.24+ features and best practices
+- Follow Go naming conventions (camelCase for functions, PascalCase for types)
+- Implement proper error handling with error wrapping
+- Use interfaces for testability and dependency injection
+- Follow clean architecture patterns
+
+### Project Structure
+- Keep handlers in `/internal/handler/`
+- Keep models in `/internal/model/`
+- Keep repositories in `/internal/repository/`
+- Keep services in `/internal/service/`
+- Keep middleware in `/internal/middleware/`
+- Keep DTOs in `/internal/dto/`
+- Keep shared utilities in `/pkg/`
+
+### API Development with Hertz
+- Use Hertz HTTP framework patterns
+- Implement proper middleware chain
+- Use structured request/response handling
+- Implement proper CORS configuration
+- Follow RESTful API design principles
+
+### Database Operations with GORM
+- Use GORM for ORM operations
+- Implement proper database migrations
+- Use transactions for data consistency
+- Follow database naming conventions
+- Implement proper indexing strategies
+- Use proper database connection pooling
+
+### Authentication and Security
+- Use JWT tokens for authentication
+- Implement proper password hashing with bcrypt
+- Use secure JWT secret management
+- Implement proper CORS configuration
+- Validate all input data
+- Use proper HTTP status codes
+
+### Error Handling
+- Use structured error responses
+- Implement proper HTTP status codes
+- Use custom error types when needed
+- Log errors with proper context
+- Provide user-friendly error messages
+- Use panic recovery middleware
+
+### Logging and Monitoring
+- Use structured JSON logging with zerolog
+- Implement proper log levels (debug, info, warn, error)
+- Log important operations and errors
+- Use proper log formatting
+- Implement request/response logging
+- Monitor application performance
+
+### Configuration Management
+- Use viper for configuration management
+- Use environment variables for configuration
+- Provide sensible default values
+- Document all configuration options
+- Use different configs for different environments
+- Keep secrets secure
+
+### Testing Strategy
+- Use Go testing framework
+- Write unit tests for business logic
+- Test API endpoints with proper test data
+- Use mocking for external dependencies
+- Test error scenarios and edge cases
+- Implement integration tests
+
+### Code Organization
+- Keep related functionality together
+- Use proper package structure
+- Implement proper dependency injection
+- Use interfaces for abstraction
+- Follow single responsibility principle
+- Keep functions small and focused
+
+### API Design Principles
+- Follow RESTful conventions
+- Use proper HTTP methods (GET, POST, PUT, DELETE)
+- Implement consistent response formats
+- Use proper status codes
+- Support both sync and async operations
+- Document API endpoints
+
+### Database Design
+- Use proper table relationships
+- Implement proper indexing
+- Use appropriate data types
+- Follow database normalization
+- Implement proper constraints
+- Use migrations for schema changes
+
+### Performance Optimization
+- Use proper database queries
+- Implement connection pooling
+- Use caching where appropriate
+- Optimize for both speed and memory
+- Use efficient algorithms
+- Monitor and profile performance
+
+### Security Implementation
+- Validate all input data
+- Use proper authentication
+- Implement proper authorization
+- Use secure password hashing
+- Implement rate limiting
+- Use HTTPS in production
+
+### Development Workflow
+- Use `make` commands for common tasks
+- Use `go mod tidy` for dependency management
+- Use proper Go modules
+- Follow Go best practices
+- Use proper versioning
+- Test before committing
+
+### Build and Deployment
+- Use proper build configurations
+- Implement proper environment handling
+- Use Docker for containerization
+- Implement proper health checks
+- Use proper logging in production
+- Monitor application health
+
+### Code Quality
+- Use proper Go formatting
+- Follow Go naming conventions
+- Use proper error handling
+- Implement proper documentation
+- Use proper comments
+- Follow Go best practices
+
+### Dependencies Management
+- Keep dependencies minimal
+- Use proper versioning
+- Update dependencies regularly
+- Document breaking changes
+- Use go mod for dependency management
+- Follow semantic versioning
+
+### API Documentation
+- Document all API endpoints
+- Use proper OpenAPI/Swagger documentation
+- Include request/response examples
+- Document error responses
+- Keep documentation up to date
+- Use proper API versioning
+
+### Monitoring and Observability
+- Implement proper health checks
+- Use structured logging
+- Monitor application metrics
+- Implement proper error tracking
+- Use proper monitoring tools
+- Implement proper alerting
+
+### Database Migrations
+- Use proper migration scripts
+- Implement rollback strategies
+- Test migrations thoroughly
+- Use proper versioning
+- Document migration changes
+- Use proper database backups
+
+### Environment Management
+- Use proper environment variables
+- Implement proper configuration management
+- Use different configs for different environments
+- Keep secrets secure
+- Document environment setup
+- Use proper environment validation
+
+### Error Recovery
+- Implement proper panic recovery
+- Use proper error handling
+- Implement proper retry logic
+- Use proper circuit breakers
+- Implement proper fallback strategies
+- Monitor error rates
+
+### Security Best Practices
+- Use proper input validation
+- Implement proper authentication
+- Use proper authorization
+- Use secure communication
+- Implement proper logging
+- Use proper error handling
+
+### Performance Monitoring
+- Monitor response times
+- Monitor database performance
+- Monitor memory usage
+- Monitor CPU usage
+- Use proper profiling tools
+- Implement proper metrics
+
+### Code Documentation
+- Use proper Go documentation
+- Document all public functions
+- Use proper comments
+- Document API endpoints
+- Keep documentation up to date
+- Use proper examples
+
+### Testing Requirements
+- Write unit tests for business logic
+- Test API endpoints
+- Test error scenarios
+- Implement proper test coverage
+- Use proper test data
+- Test database operations
+
+### Deployment Considerations
+- Use proper containerization
+- Implement proper health checks
+- Use proper logging
+- Monitor application health
+- Use proper scaling strategies
+- Implement proper backup strategies
+
+Remember: Always follow Go best practices, maintain code quality, implement proper security measures, and prioritize performance and reliability.

@@ -1,0 +1,231 @@
+# Open WebUI Lite - Agent Rules
+
+## Project Overview
+This is a full-stack web application with:
+- **Frontend**: React + Vite + Tailwind CSS (in `/web` directory)
+- **Backend**: Go + Hertz + PostgreSQL (in `/server` directory)
+- **Purpose**: Lightweight chat UI for OpenAI-compatible APIs
+
+## General Development Rules
+
+### Code Organization
+- Keep frontend and backend code in their respective directories (`/web` and `/server`)
+- Follow existing project structure and naming conventions
+- Maintain separation of concerns between UI and API layers
+- Use absolute paths when referencing files across the project
+
+### Technology Stack Awareness
+- **Frontend**: React 19, Vite, Tailwind CSS, Axios, Heroicons
+- **Backend**: Go 1.24, Hertz HTTP framework, GORM, PostgreSQL, JWT auth
+- **Build Tools**: pnpm (frontend), Make (backend)
+- **Styling**: Tailwind CSS with custom configuration
+
+### File Structure Rules
+- Frontend components in `/web/src/components/`
+- Backend handlers in `/server/internal/handler/`
+- Shared utilities in respective `pkg/` or `services/` directories
+- Configuration files at project root or in respective directories
+- Keep related files co-located (e.g., component + CSS files)
+
+### Naming Conventions
+- **Frontend**: PascalCase for React components (`ChatContainer.jsx`)
+- **Backend**: camelCase for Go functions and variables
+- **Files**: Match the language conventions (PascalCase for React, snake_case for Go)
+- **Directories**: kebab-case for multi-word directories
+
+### Import and Dependency Management
+- Use relative imports within the same module
+- Use absolute imports for cross-module references
+- Keep dependencies minimal and well-documented
+- Follow existing import patterns in the codebase
+
+### Error Handling
+- Frontend: Use ErrorBoundary components and proper error states
+- Backend: Use structured error responses with proper HTTP status codes
+- Log errors appropriately with context
+- Provide user-friendly error messages
+
+### Security Considerations
+- Always validate input on both frontend and backend
+- Use JWT tokens for authentication
+- Implement proper CORS configuration
+- Sanitize user inputs before processing
+- Follow secure coding practices for both React and Go
+
+### Performance Guidelines
+- Use React.memo and useMemo for expensive operations
+- Implement proper loading states and error boundaries
+- Use streaming for real-time features (SSE)
+- Optimize database queries and use proper indexing
+- Minimize bundle size and use code splitting when appropriate
+
+### Testing Strategy
+- Frontend: Use Vitest + React Testing Library (when implemented)
+- Backend: Use Go testing framework
+- Write unit tests for business logic
+- Include integration tests for API endpoints
+- Test error scenarios and edge cases
+
+### Documentation Standards
+- Keep README files updated with setup instructions
+- Document API endpoints and their usage
+- Include code comments for complex logic
+- Maintain changelog for significant changes
+- Document environment variables and configuration
+
+### Git and Version Control
+- Use conventional commit messages
+- Keep commits focused and atomic
+- Use meaningful branch names
+- Include PR descriptions with context
+- Test before committing
+
+### Development Workflow
+- Use `pnpm dev` for frontend development
+- Use `make run` for backend development
+- Test both frontend and backend integration
+- Use linting tools before committing
+- Follow the existing build and deployment processes
+
+### API Design Principles
+- Follow RESTful conventions
+- Use proper HTTP status codes
+- Implement consistent response formats
+- Support both sync and async operations
+- Document API changes
+
+### UI/UX Guidelines
+- Maintain responsive design principles
+- Use Tailwind CSS utility classes
+- Follow existing design patterns
+- Ensure accessibility compliance
+- Test across different screen sizes
+
+### Database and Data Management
+- Use GORM for database operations
+- Implement proper migrations
+- Use transactions for data consistency
+- Follow database naming conventions
+- Implement proper indexing
+
+### Configuration Management
+- Use environment variables for configuration
+- Provide sensible defaults
+- Document all configuration options
+- Use different configs for different environments
+- Keep secrets out of version control
+
+## Specific Rules for Frontend (`/web`)
+
+### React Development
+- Use functional components with hooks
+- Implement proper state management with Context API
+- Use React.memo for performance optimization
+- Follow React 19 best practices
+- Use proper key props for lists
+
+### Styling Guidelines
+- Use Tailwind CSS utility classes primarily
+- Create custom CSS only for complex overrides
+- Maintain consistent spacing and typography
+- Use the existing color scheme and design tokens
+- Ensure dark mode compatibility
+
+### Component Architecture
+- Keep components small and focused
+- Use composition over inheritance
+- Implement proper prop validation
+- Use TypeScript-like prop documentation
+- Follow the existing component patterns
+
+### State Management
+- Use Context API for global state
+- Use local state for component-specific data
+- Implement proper state updates
+- Use useCallback and useMemo appropriately
+- Avoid prop drilling
+
+## Specific Rules for Backend (`/server`)
+
+### Go Development
+- Follow Go naming conventions
+- Use proper error handling
+- Implement clean architecture patterns
+- Use interfaces for testability
+- Follow Go best practices
+
+### API Development
+- Use Hertz framework patterns
+- Implement proper middleware
+- Use structured logging
+- Implement proper validation
+- Follow RESTful principles
+
+### Database Operations
+- Use GORM for ORM operations
+- Implement proper migrations
+- Use transactions when needed
+- Follow database best practices
+- Implement proper indexing
+
+### Security Implementation
+- Use JWT for authentication
+- Implement proper CORS
+- Validate all inputs
+- Use secure password hashing
+- Implement rate limiting
+
+## Quality Assurance
+
+### Code Quality
+- Write clean, readable code
+- Use proper variable and function names
+- Implement proper error handling
+- Follow DRY principles
+- Use consistent formatting
+
+### Testing Requirements
+- Write unit tests for business logic
+- Test API endpoints
+- Test error scenarios
+- Implement proper test coverage
+- Use mocking for external dependencies
+
+### Performance Standards
+- Optimize for both speed and memory usage
+- Use proper caching strategies
+- Implement lazy loading where appropriate
+- Monitor and profile performance
+- Use efficient algorithms and data structures
+
+### Documentation Requirements
+- Document all public APIs
+- Include setup and deployment instructions
+- Document configuration options
+- Provide code examples
+- Keep documentation up to date
+
+## Deployment and Operations
+
+### Build Process
+- Use proper build configurations
+- Implement environment-specific builds
+- Use proper asset optimization
+- Implement proper error handling
+- Test builds before deployment
+
+### Environment Management
+- Use proper environment variables
+- Implement proper configuration management
+- Use different configs for different environments
+- Keep secrets secure
+- Document environment setup
+
+### Monitoring and Logging
+- Implement structured logging
+- Use proper log levels
+- Monitor application performance
+- Implement proper error tracking
+- Use appropriate metrics
+
+Remember: Always prioritize code quality, security, and maintainability. Follow the existing patterns in the codebase and maintain consistency across the project.

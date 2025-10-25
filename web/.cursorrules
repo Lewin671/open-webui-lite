@@ -1,0 +1,142 @@
+# Open WebUI Lite - Frontend Agent Rules
+
+## Frontend-Specific Development Guidelines
+
+### React Development Standards
+- Use React 19 features and best practices
+- Implement functional components with hooks
+- Use proper state management with Context API
+- Apply React.memo for performance optimization
+- Follow React 19 concurrent features when appropriate
+
+### Component Architecture
+- Keep components in `/src/components/` directory
+- Use PascalCase for component files (`ChatContainer.jsx`)
+- Implement proper component composition
+- Use index.js files for clean exports when folders grow
+- Follow the existing component patterns in the codebase
+
+### Styling with Tailwind CSS
+- Use Tailwind utility classes as the primary styling method
+- Follow the existing color scheme and design tokens
+- Use `tailwind.config.js` for custom configurations
+- Implement dark mode support with `dark:` prefixes
+- Create custom CSS files only for complex overrides
+- Use component-scoped CSS files when needed
+
+### State Management
+- Use Context API for global state (`AuthContext`, `ConversationContext`, etc.)
+- Implement proper state updates and error handling
+- Use useCallback and useMemo for performance optimization
+- Avoid prop drilling by using appropriate context providers
+- Keep local state for component-specific data
+
+### File Organization
+- Keep source code in `/src/` directory
+- Use `main.jsx` for app bootstrap
+- Use `App.jsx` for main application layout
+- Store assets in `/src/assets/` (fonts, images)
+- Use `/public/` for static files served by Vite
+- Co-locate related files (component + CSS)
+
+### Import and Export Patterns
+- Use ES6 import/export syntax
+- Use relative imports within the same module
+- Use absolute imports for cross-module references
+- Follow existing import patterns in the codebase
+- Use index.js files for clean re-exports
+
+### Development Workflow
+- Use `pnpm install` for dependency management
+- Use `pnpm dev` for development server (http://localhost:5173)
+- Use `pnpm build` for production builds
+- Use `pnpm preview` for local production testing
+- Use `pnpm lint` for code quality checks
+
+### Code Style and Formatting
+- Use two-space indentation
+- Use single quotes for strings
+- Omit trailing semicolons
+- Use camelCase for variables and functions
+- Use PascalCase for React components
+- Follow existing code style in the codebase
+
+### Error Handling
+- Use ErrorBoundary components for error catching
+- Implement proper error states in components
+- Use try-catch blocks for async operations
+- Provide user-friendly error messages
+- Log errors appropriately with context
+
+### Performance Optimization
+- Use React.memo for expensive components
+- Implement useCallback for event handlers
+- Use useMemo for expensive calculations
+- Implement lazy loading for large components
+- Optimize bundle size with proper imports
+
+### Testing Guidelines
+- Use Vitest with React Testing Library (when implemented)
+- Name test files `*.test.jsx`
+- Co-locate tests with components or use `src/__tests__/`
+- Test component behavior and user interactions
+- Include manual QA notes in PRs until automated tests are set up
+
+### API Integration
+- Use Axios for HTTP requests
+- Implement proper error handling for API calls
+- Use the existing API client patterns
+- Handle loading states appropriately
+- Implement proper request/response interceptors
+
+### UI/UX Guidelines
+- Maintain responsive design principles
+- Use Tailwind CSS utility classes
+- Follow existing design patterns
+- Ensure accessibility compliance
+- Test across different screen sizes
+- Use Heroicons for consistent iconography
+
+### Build and Deployment
+- Use Vite for fast development and building
+- Implement proper environment variable handling
+- Use production-optimized builds
+- Test builds locally before deployment
+- Follow the existing build configuration
+
+### Dependencies Management
+- Keep dependencies minimal and well-documented
+- Use pnpm for package management
+- Update dependencies regularly
+- Document any breaking changes
+- Follow semantic versioning
+
+### Code Quality
+- Use ESLint for code quality checks
+- Follow React hooks rules
+- Avoid unused variables
+- Use proper prop validation
+- Implement proper TypeScript-like documentation
+
+### Security Considerations
+- Validate all user inputs
+- Sanitize data before rendering
+- Use proper authentication patterns
+- Implement secure API communication
+- Follow React security best practices
+
+### Accessibility
+- Use proper ARIA attributes
+- Implement keyboard navigation
+- Ensure color contrast compliance
+- Use semantic HTML elements
+- Test with screen readers
+
+### Performance Monitoring
+- Monitor bundle size
+- Use React DevTools for debugging
+- Implement proper loading states
+- Use performance profiling tools
+- Optimize for Core Web Vitals
+
+Remember: Always follow the existing patterns in the codebase, maintain consistency, and prioritize user experience and code quality.
