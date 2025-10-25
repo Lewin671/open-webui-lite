@@ -54,11 +54,12 @@ export function ModelProvider({ children }) {
         const result = await modelService.getModels();
 
         if (result.success) {
-            dispatch({ type: 'SET_MODELS', payload: result.data });
+            const models = result.data.data || result.data; // Handle both {data: [...]} and [...] formats
+            dispatch({ type: 'SET_MODELS', payload: models });
 
             // Set default model if none selected
-            if (!state.selectedModel && result.data.length > 0) {
-                dispatch({ type: 'SET_SELECTED_MODEL', payload: result.data[0] });
+            if (!state.selectedModel && models.length > 0) {
+                dispatch({ type: 'SET_SELECTED_MODEL', payload: models[0] });
             }
         } else {
             dispatch({ type: 'SET_ERROR', payload: result.error });

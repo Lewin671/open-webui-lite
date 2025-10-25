@@ -48,9 +48,9 @@ RUN echo "SERVER_PORT=8080" > .env && \
     echo "JWT_REFRESH_EXPIRE=604800" >> .env && \
     echo "LOG_LEVEL=info" >> .env && \
     echo "LOG_FORMAT=json" >> .env && \
-    echo "CORS_ALLOWED_ORIGINS=http://localhost:5173,http://localhost:3000" >> .env && \
+    echo "CORS_ALLOWED_ORIGINS=http://localhost:5173,http://localhost:5174,http://localhost:3000" >> .env && \
     echo "CORS_ALLOWED_METHODS=GET,POST,PUT,DELETE,OPTIONS" >> .env && \
-    echo "CORS_ALLOWED_HEADERS=Content-Type,Authorization" >> .env
+    echo "CORS_ALLOWED_HEADERS=Content-Type,Authorization,Cache-Control,Accept" >> .env
 
 # 更改文件所有者
 RUN chown -R appuser:appuser /root/

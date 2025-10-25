@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"context"
-	"strings"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"open-webui-lite/server/pkg/config"
@@ -11,21 +10,10 @@ import (
 func CORSMiddleware() app.HandlerFunc {
 	return func(ctx context.Context, c *app.RequestContext) {
 		cfg := config.AppConfig.CORS
-		
-		// Parse allowed origins
-		allowedOrigins := strings.Split(cfg.AllowedOrigins, ",")
 		origin := string(c.Request.Header.Peek("Origin"))
 		
-		// Check if origin is allowed
-		allowed := false
-		for _, allowedOrigin := range allowedOrigins {
-			if strings.TrimSpace(allowedOrigin) == origin {
-				allowed = true
-				break
-			}
-		}
-		
-		if allowed {
+		// Always set CORS headers for debugging
+		if origin != "" {
 			c.Response.Header.Set("Access-Control-Allow-Origin", origin)
 		}
 		

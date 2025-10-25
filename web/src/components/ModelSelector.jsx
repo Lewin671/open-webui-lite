@@ -52,8 +52,8 @@ const ModelSelector = () => {
                                     key={model.id}
                                     onClick={() => handleModelSelect(model)}
                                     className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${selectedModel?.id === model.id
-                                            ? 'bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400'
-                                            : 'text-gray-900 dark:text-gray-100'
+                                        ? 'bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400'
+                                        : 'text-gray-900 dark:text-gray-100'
                                         }`}
                                 >
                                     <div className="font-medium">{model.name}</div>
