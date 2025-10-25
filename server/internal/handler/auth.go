@@ -8,6 +8,7 @@ import (
 	"github.com/cloudwego/hertz/pkg/app"
 	"golang.org/x/crypto/bcrypt"
 	"open-webui-lite/server/internal/dto"
+	"open-webui-lite/server/internal/middleware"
 	"open-webui-lite/server/internal/repository"
 	"open-webui-lite/server/pkg/jwt"
 )
@@ -24,11 +25,18 @@ func NewAuthHandler(userRepo repository.UserRepository) *AuthHandler {
 
 func (h *AuthHandler) Login(ctx context.Context, c *app.RequestContext) {
 	var req dto.LoginRequest
-	if err := c.BindAndValidate(&req); err != nil {
+	if err := c.BindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, dto.ErrorResponse{
-			Error: "Invalid request parameters",
-			Code:  "VALIDATION_ERROR",
+			Error: "Invalid JSON format",
+			Code:  "INVALID_JSON",
 		})
+		return
+	}
+
+	// 使用自定义校验获取详细错误信息
+	validationErrors := middleware.ValidateStruct(&req)
+	if len(validationErrors) > 0 {
+		middleware.ValidationErrorResponse(c, validationErrors)
 		return
 	}
 
@@ -70,11 +78,18 @@ func (h *AuthHandler) Login(ctx context.Context, c *app.RequestContext) {
 
 func (h *AuthHandler) Refresh(ctx context.Context, c *app.RequestContext) {
 	var req dto.RefreshRequest
-	if err := c.BindAndValidate(&req); err != nil {
+	if err := c.BindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, dto.ErrorResponse{
-			Error: "Invalid request parameters",
-			Code:  "VALIDATION_ERROR",
+			Error: "Invalid JSON format",
+			Code:  "INVALID_JSON",
 		})
+		return
+	}
+
+	// 使用自定义校验获取详细错误信息
+	validationErrors := middleware.ValidateStruct(&req)
+	if len(validationErrors) > 0 {
+		middleware.ValidationErrorResponse(c, validationErrors)
 		return
 	}
 

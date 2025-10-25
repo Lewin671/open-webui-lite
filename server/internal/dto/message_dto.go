@@ -1,11 +1,11 @@
 package dto
 
 type SendMessageRequest struct {
-	Role        string  `json:"role" binding:"required"`
-	Content     string  `json:"content" binding:"required"`
-	Model       string  `json:"model" binding:"required"`
-	Temperature float64 `json:"temperature,omitempty"`
-	MaxTokens   int     `json:"maxTokens,omitempty"`
+	Role        string  `json:"role" validate:"required,oneof=user assistant"`
+	Content     string  `json:"content" validate:"required,min=1,max=10000"`
+	Model       string  `json:"model" validate:"required,min=1,max=100"`
+	Temperature float64 `json:"temperature,omitempty" validate:"min=0,max=2"`
+	MaxTokens   int     `json:"maxTokens,omitempty" validate:"min=1,max=32000"`
 	Stream      bool    `json:"stream,omitempty"`
 }
 

@@ -2,11 +2,13 @@ package handler
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"time"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"open-webui-lite/server/internal/dto"
+	"open-webui-lite/server/internal/middleware"
 	"open-webui-lite/server/internal/model"
 	"open-webui-lite/server/internal/repository"
 )
@@ -23,11 +25,18 @@ func NewConversationHandler(conversationRepo repository.ConversationRepository) 
 
 func (h *ConversationHandler) CreateConversation(ctx context.Context, c *app.RequestContext) {
 	var req dto.CreateConversationRequest
-	if err := c.BindAndValidate(&req); err != nil {
+	if err := c.BindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, dto.ErrorResponse{
-			Error: "Invalid request parameters",
-			Code:  "VALIDATION_ERROR",
+			Error: "Invalid JSON format",
+			Code:  "INVALID_JSON",
 		})
+		return
+	}
+
+	// 使用自定义校验获取详细错误信息
+	validationErrors := middleware.ValidateStruct(&req)
+	if len(validationErrors) > 0 {
+		middleware.ValidationErrorResponse(c, validationErrors)
 		return
 	}
 

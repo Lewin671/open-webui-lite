@@ -14,6 +14,7 @@ const ConversationList = () => {
     clearError
   } = useConversation()
 
+
   useEffect(() => {
     loadConversations()
   }, [])
@@ -71,13 +72,13 @@ const ConversationList = () => {
               <div className='animate-spin rounded-full h-6 w-6 border-b-2 border-indigo-600 mx-auto'></div>
             </div>
           ) : (
-            conversations.map((conversation) => (
+            (conversations || []).map((conversation) => (
               <div key={conversation.id} className='w-full cursor-pointer mb-1'>
                 <div>
                   <div
                     className={`w-full group rounded-md relative flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-900 text-tip transition ${currentConversation?.id === conversation.id
-                        ? 'bg-gray-100 dark:bg-gray-800'
-                        : ''
+                      ? 'bg-gray-100 dark:bg-gray-800'
+                      : ''
                       }`}
                     onClick={() => handleConversationClick(conversation.id)}
                   >

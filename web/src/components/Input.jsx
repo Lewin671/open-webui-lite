@@ -14,7 +14,8 @@ const Input = ({ selectedSuggestion }) => {
     currentConversation,
     addMessage,
     updateMessage,
-    loadConversations
+    loadConversations,
+    createConversation
   } = useConversation();
 
   const { selectedModel } = useModel();
@@ -37,18 +38,34 @@ const Input = ({ selectedSuggestion }) => {
   }, [selectedSuggestion]);
 
   const handleInputChange = (event) => {
-    if (event.target && typeof event.target.innerText === 'string') {
-      setInputText(event.target.innerText);
-    } else if (typeof event === 'string') {
-      setInputText(event);
-    }
+    const text = event.target.innerText || event.target.textContent || '';
+    setInputText(text);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!inputText.trim() || !currentConversation || isLoading) {
+    console.log('Submit triggered:', { inputText: inputText.trim(), isLoading, currentConversation });
+
+    if (!inputText.trim() || isLoading) {
+      console.log('Submit blocked:', { hasText: !!inputText.trim(), isLoading });
       return;
+    }
+
+    // If no current conversation, create one first
+    let conversationId = currentConversation?.id;
+    if (!conversationId) {
+      console.log('Creating new conversation...');
+      const newConversation = await createConversation(
+        inputText.trim().substring(0, 50) + (inputText.trim().length > 50 ? '...' : ''),
+        { model: selectedModel?.id || 'gpt-3.5-turbo' }
+      );
+      if (!newConversation) {
+        console.error('Failed to create conversation');
+        return;
+      }
+      conversationId = newConversation.id;
+      console.log('Created conversation:', conversationId);
     }
 
     const userMessage = {
@@ -82,15 +99,26 @@ const Input = ({ selectedSuggestion }) => {
       addMessage(assistantMessage);
       setStreamingMessage(assistantMessage);
 
+      console.log('Sending message with streaming:', {
+        conversationId,
+        messageData: {
+          role: 'user',
+          content: userMessage.content,
+          model: selectedModel?.id || 'gpt-3.5-turbo',
+          temperature: 0.7,
+          maxTokens: 1000,
+        }
+      });
+
       // Send message with streaming
       await messageService.sendMessageStream(
-        currentConversation.id,
+        conversationId,
         {
           role: 'user',
           content: userMessage.content,
           model: selectedModel?.id || 'gpt-3.5-turbo',
           temperature: 0.7,
-          max_tokens: 1000,
+          maxTokens: 1000,
         },
         (delta) => {
           // Update streaming message content

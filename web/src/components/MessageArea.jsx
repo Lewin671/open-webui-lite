@@ -40,8 +40,8 @@ const MessageArea = () => {
               >
                 <div
                   className={`max-w-3xl px-4 py-2 rounded-lg ${message.role === 'user'
-                      ? 'bg-indigo-600 text-white'
-                      : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
+                    ? 'bg-indigo-600 text-white'
+                    : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
                     }`}
                 >
                   <div className="whitespace-pre-wrap">{message.content}</div>
@@ -67,12 +67,10 @@ const MessageArea = () => {
         )}
       </div>
 
-      {/* Input Area - only show when conversation is selected */}
-      {currentConversation && (
-        <div className="border-t border-gray-200 dark:border-gray-700 p-4">
-          <Input selectedSuggestion={selectedSuggestion} />
-        </div>
-      )}
+      {/* Input Area - always show at bottom */}
+      <div className="border-t border-gray-200 dark:border-gray-700 p-4">
+        <Input selectedSuggestion={selectedSuggestion} />
+      </div>
     </div>
   );
 };

@@ -55,12 +55,12 @@ function conversationReducer(state, action) {
         case 'ADD_CONVERSATION':
             return {
                 ...state,
-                conversations: [action.payload, ...state.conversations],
+                conversations: [action.payload, ...(state.conversations || [])],
             };
         case 'UPDATE_CONVERSATION':
             return {
                 ...state,
-                conversations: state.conversations.map(conv =>
+                conversations: (state.conversations || []).map(conv =>
                     conv.id === action.payload.id ? { ...conv, ...action.payload.updates } : conv
                 ),
                 currentConversation: state.currentConversation?.id === action.payload.id
@@ -70,7 +70,7 @@ function conversationReducer(state, action) {
         case 'DELETE_CONVERSATION':
             return {
                 ...state,
-                conversations: state.conversations.filter(conv => conv.id !== action.payload),
+                conversations: (state.conversations || []).filter(conv => conv.id !== action.payload),
                 currentConversation: state.currentConversation?.id === action.payload
                     ? null
                     : state.currentConversation,
@@ -103,9 +103,11 @@ export function ConversationProvider({ children }) {
         const result = await conversationService.getConversations();
 
         if (result.success) {
-            dispatch({ type: 'SET_CONVERSATIONS', payload: result.data });
+            dispatch({ type: 'SET_CONVERSATIONS', payload: result.data || [] });
         } else {
             dispatch({ type: 'SET_ERROR', payload: result.error });
+            // 确保在错误情况下也保持conversations为空数组
+            dispatch({ type: 'SET_CONVERSATIONS', payload: [] });
         }
     };
 

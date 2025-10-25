@@ -1,7 +1,7 @@
 package dto
 
 type CreateConversationRequest struct {
-	Title    string                 `json:"title" binding:"required"`
+	Title    string                 `json:"title" validate:"required,min=1,max=200"`
 	Metadata map[string]interface{} `json:"metadata,omitempty"`
 }
 

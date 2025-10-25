@@ -12,7 +12,7 @@ import (
 type Conversation struct {
 	ID           string                 `json:"id" gorm:"type:uuid;primary_key"`
 	UserID       string                 `json:"userId" gorm:"type:uuid;not null;index"`
-	Title        string                 `json:"title"`
+	Title        string                 `json:"title" gorm:"size:200;not null"`
 	MessageCount int                    `json:"messageCount" gorm:"default:0"`
 	Metadata     JSONB `json:"metadata" gorm:"type:jsonb"`
 	CreatedAt    time.Time              `json:"createdAt"`

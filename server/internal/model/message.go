@@ -13,11 +13,11 @@ type Message struct {
 	ID             string    `json:"id" gorm:"type:uuid;primary_key"`
 	ConversationID string    `json:"conversationId" gorm:"type:uuid;not null;index"`
 	UserID         string    `json:"userId" gorm:"type:uuid;not null;index"`
-	Role           string    `json:"role" gorm:"not null"` // "user" or "assistant"
-	Content        string    `json:"content" gorm:"type:text;not null"`
-	Model          string    `json:"model,omitempty"`
-	Temperature    float64   `json:"temperature,omitempty"`
-	MaxTokens      int       `json:"maxTokens,omitempty"`
+	Role           string    `json:"role" gorm:"not null;check:role IN ('user','assistant')"` // "user" or "assistant"
+	Content        string    `json:"content" gorm:"type:text;not null;size:10000"`
+	Model          string    `json:"model,omitempty" gorm:"size:100"`
+	Temperature    float64   `json:"temperature,omitempty" gorm:"check:temperature >= 0 AND temperature <= 2"`
+	MaxTokens      int       `json:"maxTokens,omitempty" gorm:"check:max_tokens >= 1 AND max_tokens <= 32000"`
 	Usage          *UsageJSONB `json:"usage,omitempty" gorm:"type:jsonb"`
 	CreatedAt      time.Time `json:"createdAt"`
 	UpdatedAt      time.Time `json:"updatedAt"`
