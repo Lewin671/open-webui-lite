@@ -18,12 +18,6 @@ const ConversationList = () => {
     loadConversations()
   }, [])
 
-  const handleNewConversation = async () => {
-    const newConversation = await createConversation('New Conversation')
-    if (newConversation) {
-      loadConversation(newConversation.id)
-    }
-  }
 
   const handleConversationClick = (conversationId) => {
     loadConversation(conversationId)
@@ -70,35 +64,6 @@ const ConversationList = () => {
     <div className='relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden'>
       <div className='relative px-2 mt-0.5'>
         <div className='w-full'>
-          {/* New Conversation Button */}
-          <div className='w-full cursor-pointer mb-2'>
-            <div>
-              <div
-                className='w-full group rounded-md relative flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-900 text-tip transition'
-                onClick={handleNewConversation}
-              >
-                <div className='w-full py-1.5 pl-2 flex items-center gap-1.5 text-xs font-medium cursor-pointer'>
-                  <div className='text-[#676767]'>
-                    <svg
-                      xmlns='http://www.w3.org/2000/svg'
-                      fill='none'
-                      viewBox='0 0 24 24'
-                      strokeWidth='2.5'
-                      stroke='currentColor'
-                      className='size-3'
-                    >
-                      <path
-                        strokeLinecap='round'
-                        strokeLinejoin='round'
-                        d='M12 4.5v15m7.5-7.5h-15'
-                      ></path>
-                    </svg>
-                  </div>
-                  <div className='translate-y-[0.5px]'>New Conversation</div>
-                </div>
-              </div>
-            </div>
-          </div>
 
           {/* Conversations List */}
           {isLoading ? (
