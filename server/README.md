@@ -4,6 +4,17 @@
 
 本文档描述了 Open WebUI Lite 的 RESTful API 接口规范。所有接口统一使用 `/v1` 版本前缀。
 
+## 技术栈
+
+本项目采用以下技术栈：
+
+- **Web框架**: [Hertz](https://github.com/cloudwego/hertz) - 字节跳动开源的高性能 HTTP 框架
+- **RPC框架**: [Kitex](https://github.com/cloudwego/kitex) - 字节跳动开源的高性能 RPC 框架
+- **语言**: Go 1.21+
+- **数据库**: 支持 MySQL/PostgreSQL/SQLite
+- **认证**: JWT
+- **日志**: 结构化日志
+
 ## 基础信息
 
 - **Base URL**: `https://your-domain.com/v1`
