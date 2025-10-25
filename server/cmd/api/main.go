@@ -80,6 +80,7 @@ func main() {
 			// Conversations
 			conversations := protected.Group("/conversations")
 			{
+				conversations.GET("", conversationHandler.GetConversations)
 				conversations.POST("", conversationHandler.CreateConversation)
 				conversations.GET("/:id", conversationHandler.GetConversation)
 			}
@@ -87,6 +88,7 @@ func main() {
 			// Messages
 			messages := protected.Group("/conversations/:id/messages")
 			{
+				messages.GET("", messageHandler.GetMessages)
 				messages.POST("", messageHandler.SendMessage)
 			}
 		}

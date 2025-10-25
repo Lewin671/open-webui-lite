@@ -216,3 +216,49 @@ func (h *MessageHandler) handleStreamingResponse(ctx context.Context, c *app.Req
 	fmt.Fprintf(c.Response.BodyWriter(), "data: %s\n\n", string(eventData))
 	// Flush is not available on io.Writer, but Hertz handles this automatically
 }
+
+func (h *MessageHandler) GetMessages(ctx context.Context, c *app.RequestContext) {
+	conversationID := c.Param("id")
+	userID := c.GetString("user_id")
+	
+	// Check if conversation exists and user has access
+	conversation, err := h.conversationRepo.GetByID(conversationID)
+	if err != nil {
+		c.JSON(http.StatusNotFound, dto.ErrorResponse{
+			Error: "Conversation not found",
+			Code:  "NOT_FOUND",
+		})
+		return
+	}
+
+	if conversation.UserID != userID {
+		c.JSON(http.StatusForbidden, dto.ErrorResponse{
+			Error: "Access denied",
+			Code:  "FORBIDDEN",
+		})
+		return
+	}
+
+	// Get messages for this conversation
+	messages, err := h.messageRepo.GetByConversationID(conversationID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, dto.ErrorResponse{
+			Error: "Failed to get messages",
+			Code:  "INTERNAL_ERROR",
+		})
+		return
+	}
+
+	// Convert to response format
+	var response []dto.MessageResponse
+	for _, msg := range messages {
+		response = append(response, dto.MessageResponse{
+			ID:        msg.ID,
+			Role:      msg.Role,
+			Content:   msg.Content,
+			CreatedAt: msg.CreatedAt.Format(time.RFC3339),
+		})
+	}
+
+	c.JSON(http.StatusOK, response)
+}

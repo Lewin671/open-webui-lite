@@ -1,9 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { useConversation } from '../contexts/ConversationContext.jsx'
+import { useModel } from '../contexts/ModelContext.jsx'
+import messageService from '../services/messageService.js'
 import './Input.css'
 
 const Input = ({ selectedSuggestion }) => {
   const [inputText, setInputText] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [streamingMessage, setStreamingMessage] = useState(null);
   const inputRef = useRef(null);
+
+  const {
+    currentConversation,
+    addMessage,
+    updateMessage,
+    loadConversations
+  } = useConversation();
+
+  const { selectedModel } = useModel();
 
   useEffect(() => {
     if (selectedSuggestion && inputRef.current) {
@@ -23,41 +37,100 @@ const Input = ({ selectedSuggestion }) => {
   }, [selectedSuggestion]);
 
   const handleInputChange = (event) => {
-    // Check if the event target and its innerText are available
     if (event.target && typeof event.target.innerText === 'string') {
       setInputText(event.target.innerText);
     } else if (typeof event === 'string') {
-      // This case handles direct setting of text, e.g., from a suggestion
-      // However, the main logic for suggestions is now in useEffect
-      // This might be redundant or could be used for other programmatic updates if needed
       setInputText(event);
     }
   };
 
-  // Effect to update input text if selectedSuggestion changes
-  // This is already handled by the useEffect above, but if we want to ensure
-  // setInputText is also called if selectedSuggestion is the *initial* prop value
-  // and not just on changes, this could be useful. However, the current
-  // useEffect with selectedSuggestion in dependency array should cover initial mount too if selectedSuggestion is passed.
-  // For now, the main useEffect handles this well.
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-// Original handleInputChange, kept for reference or if specific event handling is needed.
-// const handleInputChange = (event) => {
-//   setInputText(event.target.innerText);
-// };
+    if (!inputText.trim() || !currentConversation || isLoading) {
+      return;
+    }
 
-// Corrected handleInputChange to ensure it only updates from user input events
-const handleUserInput = (event) => {
-    setInputText(event.target.innerText);
-  };
+    const userMessage = {
+      id: `temp-${Date.now()}`,
+      role: 'user',
+      content: inputText.trim(),
+      created_at: new Date().toISOString(),
+    };
 
-  const handleSend = () => {
-    if (inputText.trim() === '') return;
-    // Implement send logic here, e.g., pass inputText to a parent component or API
-    console.log('Sending:', inputText);
+    // Add user message immediately
+    addMessage(userMessage);
+
+    // Clear input
     setInputText('');
     if (inputRef.current) {
-      inputRef.current.innerText = ''; // Clear the contentEditable div
+      inputRef.current.innerText = '';
+    }
+
+    setIsLoading(true);
+
+    try {
+      // Create assistant message placeholder for streaming
+      const assistantMessageId = `temp-assistant-${Date.now()}`;
+      const assistantMessage = {
+        id: assistantMessageId,
+        role: 'assistant',
+        content: '',
+        created_at: new Date().toISOString(),
+      };
+
+      addMessage(assistantMessage);
+      setStreamingMessage(assistantMessage);
+
+      // Send message with streaming
+      await messageService.sendMessageStream(
+        currentConversation.id,
+        {
+          role: 'user',
+          content: userMessage.content,
+          model: selectedModel?.id || 'gpt-3.5-turbo',
+          temperature: 0.7,
+          max_tokens: 1000,
+        },
+        (delta) => {
+          // Update streaming message content
+          const updatedContent = (assistantMessage.content || '') + delta.delta;
+          updateMessage(assistantMessageId, { content: updatedContent });
+          setStreamingMessage(prev => ({ ...prev, content: updatedContent }));
+        },
+        (finalMessage) => {
+          // Final message received
+          updateMessage(assistantMessageId, {
+            id: finalMessage.message.id,
+            content: finalMessage.message.content,
+            created_at: finalMessage.message.created_at,
+          });
+          setStreamingMessage(null);
+          setIsLoading(false);
+
+          // Refresh conversations to update the list
+          loadConversations();
+        },
+        (error) => {
+          console.error('Streaming error:', error);
+          updateMessage(assistantMessageId, {
+            content: 'Sorry, there was an error generating the response.',
+          });
+          setStreamingMessage(null);
+          setIsLoading(false);
+        }
+      );
+    } catch (error) {
+      console.error('Error sending message:', error);
+      setIsLoading(false);
+      setStreamingMessage(null);
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit(e);
     }
   };
   return (
@@ -82,12 +155,7 @@ const handleUserInput = (event) => {
                           className='outline-none min-h-[24px] empty:before:content-[attr(data-placeholder)] empty:before:text-[#adb5bd] empty:before:pointer-events-none'
                           data-placeholder='有什么我能帮您的吗？'
                           onInput={handleInputChange}
-                          onKeyDown={(e) => {
-                            if (e.key === 'Enter' && !e.shiftKey) {
-                              e.preventDefault();
-                              handleSend();
-                            }
-                          }}
+                          onKeyDown={handleKeyDown}
                         ></p>
                       </div>
                     </div>
@@ -141,22 +209,26 @@ const handleUserInput = (event) => {
                         <div aria-label='发送' className='flex'>
                           <button
                             type='button'
-                            onClick={handleSend}
-                            disabled={!inputText.trim()}
-                            className={`transition rounded-full p-1.5 self-center ${inputText.trim() ? 'bg-black text-white hover:bg-gray-900 dark:bg-white dark:text-black dark:hover:bg-gray-100' : 'bg-gray-300 text-gray-500 dark:bg-gray-700 dark:text-gray-500 cursor-not-allowed'}`}
+                            onClick={handleSubmit}
+                            disabled={!inputText.trim() || isLoading}
+                            className={`transition rounded-full p-1.5 self-center ${inputText.trim() && !isLoading ? 'bg-black text-white hover:bg-gray-900 dark:bg-white dark:text-black dark:hover:bg-gray-100' : 'bg-gray-300 text-gray-500 dark:bg-gray-700 dark:text-gray-500 cursor-not-allowed'}`}
                             aria-label='Send'
                           >
-                            <svg
-                              aria-hidden='true'
-                              xmlns='http://www.w3.org/2000/svg'
-                              fill='currentColor'
-                              viewBox='0 0 24 24'
-                              strokeWidth='0'
-                              stroke='currentColor'
-                              className='size-5'
-                            >
-                              <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" />
-                            </svg>
+                            {isLoading ? (
+                              <div className='animate-spin rounded-full h-5 w-5 border-b-2 border-current'></div>
+                            ) : (
+                              <svg
+                                aria-hidden='true'
+                                xmlns='http://www.w3.org/2000/svg'
+                                fill='currentColor'
+                                viewBox='0 0 24 24'
+                                strokeWidth='0'
+                                stroke='currentColor'
+                                className='size-5'
+                              >
+                                <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" />
+                              </svg>
+                            )}
                           </button>
                         </div>
                       </div>

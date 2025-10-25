@@ -56,6 +56,34 @@ func (h *ConversationHandler) CreateConversation(ctx context.Context, c *app.Req
 	})
 }
 
+func (h *ConversationHandler) GetConversations(ctx context.Context, c *app.RequestContext) {
+	userID := c.GetString("user_id")
+	
+	conversations, err := h.conversationRepo.GetByUserID(userID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, dto.ErrorResponse{
+			Error: "Failed to get conversations",
+			Code:  "INTERNAL_ERROR",
+		})
+		return
+	}
+
+	// Convert to response format
+	var response []dto.ConversationResponse
+	for _, conv := range conversations {
+		response = append(response, dto.ConversationResponse{
+			ID:           conv.ID,
+			Title:        conv.Title,
+			CreatedAt:    conv.CreatedAt.Format(time.RFC3339),
+			UpdatedAt:    conv.UpdatedAt.Format(time.RFC3339),
+			MessageCount: conv.MessageCount,
+			Metadata:     conv.Metadata,
+		})
+	}
+
+	c.JSON(http.StatusOK, response)
+}
+
 func (h *ConversationHandler) GetConversation(ctx context.Context, c *app.RequestContext) {
 	conversationID := c.Param("id")
 	userID := c.GetString("user_id")
