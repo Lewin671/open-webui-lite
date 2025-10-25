@@ -1,5 +1,18 @@
 package dto
 
+type RegisterRequest struct {
+	Email    string `json:"email" validate:"required,email,max=255"`
+	Password string `json:"password" validate:"required,min=8,max=128"`
+	Name     string `json:"name" validate:"required,min=1,max=255"`
+}
+
+type RegisterResponse struct {
+	User         UserInfo `json:"user"`
+	AccessToken  string   `json:"accessToken"`
+	RefreshToken string   `json:"refreshToken"`
+	ExpiresIn    int      `json:"expiresIn"`
+}
+
 type LoginRequest struct {
 	Email    string `json:"email" validate:"required,email,max=255"`
 	Password string `json:"password" validate:"required,min=8,max=128"`

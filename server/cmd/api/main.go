@@ -66,6 +66,7 @@ func main() {
 		// Authentication routes
 		auth := v1.Group("/auth")
 		{
+			auth.POST("/register", authHandler.Register)
 			auth.POST("/login", authHandler.Login)
 			auth.POST("/refresh", authHandler.Refresh)
 		}
@@ -83,6 +84,8 @@ func main() {
 				conversations.GET("", conversationHandler.GetConversations)
 				conversations.POST("", conversationHandler.CreateConversation)
 				conversations.GET("/:id", conversationHandler.GetConversation)
+				conversations.PUT("/:id", conversationHandler.UpdateConversation)
+				conversations.DELETE("/:id", conversationHandler.DeleteConversation)
 			}
 			
 			// Messages

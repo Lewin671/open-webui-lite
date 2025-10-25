@@ -35,3 +35,11 @@ type StreamDone struct {
 	Message MessageResponse `json:"message"`
 	Usage   Usage           `json:"usage"`
 }
+
+type PaginatedMessagesResponse struct {
+	Messages   []MessageResponse `json:"messages"`
+	Total      int64              `json:"total"`
+	Page       int                `json:"page"`
+	Limit      int                `json:"limit"`
+	TotalPages int                `json:"totalPages"`
+}

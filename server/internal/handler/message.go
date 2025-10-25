@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/cloudwego/hertz/pkg/app"
@@ -247,8 +248,33 @@ func (h *MessageHandler) GetMessages(ctx context.Context, c *app.RequestContext)
 		return
 	}
 
-	// Get messages for this conversation
-	messages, err := h.messageRepo.GetByConversationID(conversationID)
+	// Get query parameters
+	pageStr := c.DefaultQuery("page", "1")
+	limitStr := c.DefaultQuery("limit", "50")
+	
+	page := 1
+	limit := 50
+	
+	// Parse page parameter
+	if p, err := strconv.Atoi(pageStr); err == nil && p > 0 {
+		page = p
+	}
+	
+	// Parse limit parameter
+	if l, err := strconv.Atoi(limitStr); err == nil && l > 0 {
+		limit = l
+	}
+	
+	// Validate pagination parameters
+	if page < 1 {
+		page = 1
+	}
+	if limit < 1 || limit > 100 {
+		limit = 50
+	}
+
+	// Get messages for this conversation with pagination
+	messages, total, err := h.messageRepo.GetByConversationIDWithPagination(conversationID, page, limit)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dto.ErrorResponse{
 			Error: "Failed to get messages",
@@ -258,14 +284,25 @@ func (h *MessageHandler) GetMessages(ctx context.Context, c *app.RequestContext)
 	}
 
 	// Convert to response format
-	var response []dto.MessageResponse
+	var responseMessages []dto.MessageResponse
 	for _, msg := range messages {
-		response = append(response, dto.MessageResponse{
+		responseMessages = append(responseMessages, dto.MessageResponse{
 			ID:        msg.ID,
 			Role:      msg.Role,
 			Content:   msg.Content,
 			CreatedAt: msg.CreatedAt.Format(time.RFC3339),
 		})
+	}
+
+	// Calculate total pages
+	totalPages := int((total + int64(limit) - 1) / int64(limit))
+
+	response := dto.PaginatedMessagesResponse{
+		Messages:   responseMessages,
+		Total:      total,
+		Page:       page,
+		Limit:     limit,
+		TotalPages: totalPages,
 	}
 
 	c.JSON(http.StatusOK, response)

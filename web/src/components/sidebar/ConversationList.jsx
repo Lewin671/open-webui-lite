@@ -72,7 +72,7 @@ const ConversationList = () => {
               <div className='animate-spin rounded-full h-6 w-6 border-b-2 border-indigo-600 mx-auto'></div>
             </div>
           ) : (
-            (conversations || []).map((conversation) => (
+            Array.isArray(conversations) ? conversations.map((conversation) => (
               <div key={conversation.id} className='w-full cursor-pointer mb-1'>
                 <div>
                   <div
@@ -132,7 +132,11 @@ const ConversationList = () => {
                   </div>
                 </div>
               </div>
-            ))
+            )) : (
+              <div className='text-center py-4 text-gray-500 dark:text-gray-400'>
+                No conversations found
+              </div>
+            )
           )}
         </div>
       </div>

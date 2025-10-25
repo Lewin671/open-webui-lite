@@ -9,6 +9,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 	"open-webui-lite/server/internal/dto"
 	"open-webui-lite/server/internal/middleware"
+	"open-webui-lite/server/internal/model"
 	"open-webui-lite/server/internal/repository"
 	"open-webui-lite/server/pkg/jwt"
 )
@@ -21,6 +22,82 @@ func NewAuthHandler(userRepo repository.UserRepository) *AuthHandler {
 	return &AuthHandler{
 		userRepo: userRepo,
 	}
+}
+
+func (h *AuthHandler) Register(ctx context.Context, c *app.RequestContext) {
+	var req dto.RegisterRequest
+	if err := c.BindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, dto.ErrorResponse{
+			Error: "Invalid JSON format",
+			Code:  "INVALID_JSON",
+		})
+		return
+	}
+
+	// 使用自定义校验获取详细错误信息
+	validationErrors := middleware.ValidateStruct(&req)
+	if len(validationErrors) > 0 {
+		middleware.ValidationErrorResponse(c, validationErrors)
+		return
+	}
+
+	// Check if user already exists
+	existingUser, err := h.userRepo.GetByEmail(req.Email)
+	if err == nil && existingUser != nil {
+		c.JSON(http.StatusConflict, dto.ErrorResponse{
+			Error: "User already exists",
+			Code:  "USER_EXISTS",
+		})
+		return
+	}
+
+	// Hash password
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, dto.ErrorResponse{
+			Error: "Failed to hash password",
+			Code:  "INTERNAL_ERROR",
+		})
+		return
+	}
+
+	// Create user
+	user := &model.User{
+		Email:    req.Email,
+		Password: string(hashedPassword),
+		Name:     req.Name,
+	}
+
+	if err := h.userRepo.Create(user); err != nil {
+		c.JSON(http.StatusInternalServerError, dto.ErrorResponse{
+			Error: "Failed to create user",
+			Code:  "INTERNAL_ERROR",
+		})
+		return
+	}
+
+	// Generate tokens
+	accessToken, refreshToken, err := jwt.GenerateTokenPair(user.ID, user.Email)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, dto.ErrorResponse{
+			Error: "Failed to generate tokens",
+			Code:  "INTERNAL_ERROR",
+		})
+		return
+	}
+
+	c.JSON(http.StatusCreated, dto.RegisterResponse{
+		User: dto.UserInfo{
+			ID:        user.ID,
+			Email:     user.Email,
+			Name:      user.Name,
+			Avatar:    user.Avatar,
+			CreatedAt: user.CreatedAt.Format(time.RFC3339),
+		},
+		AccessToken:  accessToken,
+		RefreshToken: refreshToken,
+		ExpiresIn:    3600, // 1 hour
+	})
 }
 
 func (h *AuthHandler) Login(ctx context.Context, c *app.RequestContext) {

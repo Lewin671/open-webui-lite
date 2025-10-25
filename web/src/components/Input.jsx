@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useConversation } from '../contexts/ConversationContext.jsx'
 import { useModel } from '../contexts/ModelContext.jsx'
+import { useToast } from '../contexts/ToastContext.jsx'
 import messageService from '../services/messageService.js'
 import './Input.css'
 
@@ -15,10 +16,12 @@ const Input = ({ selectedSuggestion }) => {
     addMessage,
     updateMessage,
     loadConversations,
-    createConversation
+    createConversation,
+    setCurrentConversation
   } = useConversation();
 
   const { selectedModel } = useModel();
+  const { showError } = useToast();
 
   useEffect(() => {
     if (selectedSuggestion && inputRef.current) {
@@ -62,9 +65,11 @@ const Input = ({ selectedSuggestion }) => {
       );
       if (!newConversation) {
         console.error('Failed to create conversation');
+        showError('Failed to create conversation. Please try again.');
         return;
       }
       conversationId = newConversation.id;
+      setCurrentConversation(newConversation);
       console.log('Created conversation:', conversationId);
     }
 
@@ -146,12 +151,14 @@ const Input = ({ selectedSuggestion }) => {
           });
           setStreamingMessage(null);
           setIsLoading(false);
+          showError('Failed to send message. Please try again.');
         }
       );
     } catch (error) {
       console.error('Error sending message:', error);
       setIsLoading(false);
       setStreamingMessage(null);
+      showError('Failed to send message. Please try again.');
     }
   };
 

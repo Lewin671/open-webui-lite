@@ -1,6 +1,12 @@
 import React from 'react'
+import { useModel } from '../contexts/ModelContext.jsx'
+import ModelSelector from './ModelSelector.jsx'
+import DarkModeToggle from './DarkModeToggle.jsx'
+import HamburgerMenu from './HamburgerMenu.jsx'
 
 const ChatHeader = () => {
+  const { selectedModel } = useModel()
+
   return (
     <section className="w-full flex justify-center py-3"> {/* 新增外层居中容器 */}
       <div className="flex w-fit px-5 flex-row justify-center items-center gap-3 sm:gap-3.5">
@@ -20,7 +26,12 @@ const ChatHeader = () => {
             </button>
           </div>
         </div>
-        <h1 className="text-4xl line-clamp-1">deepseek-chat</h1>
+        <div className="flex items-center gap-3">
+          <HamburgerMenu />
+          <h1 className="text-4xl line-clamp-1">{selectedModel?.name || 'Chat Assistant'}</h1>
+          <ModelSelector />
+          <DarkModeToggle />
+        </div>
       </div>
     </section>
   )

@@ -71,7 +71,7 @@ func LoadConfig() {
 	viper.SetDefault("LOG_FORMAT", "json")
 	viper.SetDefault("CORS_ALLOWED_ORIGINS", "http://localhost:5173,http://localhost:3000")
 	viper.SetDefault("CORS_ALLOWED_METHODS", "GET,POST,PUT,DELETE,OPTIONS")
-	viper.SetDefault("CORS_ALLOWED_HEADERS", "Content-Type,Authorization")
+	viper.SetDefault("CORS_ALLOWED_HEADERS", "Content-Type,Authorization,Cache-Control,Accept")
 
 	// Enable reading from environment variables
 	viper.AutomaticEnv()
@@ -136,7 +136,7 @@ func LoadConfig() {
 		AppConfig.CORS.AllowedMethods = "GET,POST,PUT,DELETE,OPTIONS"
 	}
 	if AppConfig.CORS.AllowedHeaders == "" {
-		AppConfig.CORS.AllowedHeaders = "Content-Type,Authorization"
+		AppConfig.CORS.AllowedHeaders = "Content-Type,Authorization,Cache-Control,Accept"
 	}
 
 	// Override with environment variables if they exist

@@ -3,6 +3,8 @@ import { useConversation } from '../contexts/ConversationContext.jsx';
 import ChatHeader from './ChatHeader';
 import Input from './Input';
 import Suggestion from './Suggestion';
+import MarkdownRenderer from './MarkdownRenderer';
+import TypingIndicator from './TypingIndicator';
 
 const MessageArea = () => {
   const [selectedSuggestion, setSelectedSuggestion] = useState('');
@@ -44,19 +46,29 @@ const MessageArea = () => {
                     : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
                     }`}
                 >
-                  <div className="whitespace-pre-wrap">{message.content}</div>
+                  {message.role === 'assistant' ? (
+                    <MarkdownRenderer content={message.content} />
+                  ) : (
+                    <div className="whitespace-pre-wrap">{message.content}</div>
+                  )}
                   <div className="text-xs opacity-70 mt-1">
                     {new Date(message.created_at).toLocaleTimeString()}
                   </div>
                 </div>
               </div>
             ))}
+            {isLoading && (
+              <div className="flex justify-start">
+                <div className="max-w-3xl px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white">
+                  <TypingIndicator />
+                </div>
+              </div>
+            )}
             <div ref={messagesEndRef} />
           </div>
         ) : showSuggestions ? (
           <div className="flex flex-1 w-full justify-center items-center px-20">
             <div className="block overflow-hidden w-full">
-              <Input selectedSuggestion={selectedSuggestion} />
               <Suggestion onSuggestionClick={handleSuggestionClick} />
             </div>
           </div>

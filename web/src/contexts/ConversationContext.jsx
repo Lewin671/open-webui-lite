@@ -55,12 +55,12 @@ function conversationReducer(state, action) {
         case 'ADD_CONVERSATION':
             return {
                 ...state,
-                conversations: [action.payload, ...(state.conversations || [])],
+                conversations: [action.payload, ...(Array.isArray(state.conversations) ? state.conversations : [])],
             };
         case 'UPDATE_CONVERSATION':
             return {
                 ...state,
-                conversations: (state.conversations || []).map(conv =>
+                conversations: (Array.isArray(state.conversations) ? state.conversations : []).map(conv =>
                     conv.id === action.payload.id ? { ...conv, ...action.payload.updates } : conv
                 ),
                 currentConversation: state.currentConversation?.id === action.payload.id
@@ -70,7 +70,7 @@ function conversationReducer(state, action) {
         case 'DELETE_CONVERSATION':
             return {
                 ...state,
-                conversations: (state.conversations || []).filter(conv => conv.id !== action.payload),
+                conversations: (Array.isArray(state.conversations) ? state.conversations : []).filter(conv => conv.id !== action.payload),
                 currentConversation: state.currentConversation?.id === action.payload
                     ? null
                     : state.currentConversation,
@@ -176,6 +176,10 @@ export function ConversationProvider({ children }) {
         dispatch({ type: 'UPDATE_MESSAGE', payload: { id: messageId, updates } });
     };
 
+    const setCurrentConversation = (conversation) => {
+        dispatch({ type: 'SET_CURRENT_CONVERSATION', payload: conversation });
+    };
+
     const clearError = () => {
         dispatch({ type: 'CLEAR_ERROR' });
     };
@@ -190,6 +194,7 @@ export function ConversationProvider({ children }) {
         deleteConversation,
         addMessage,
         updateMessage,
+        setCurrentConversation,
         clearError,
     };
 
