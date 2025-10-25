@@ -108,7 +108,7 @@ func (h *MessageHandler) SendMessage(ctx context.Context, c *app.RequestContext)
 		Model:          req.Model,
 		Temperature:    req.Temperature,
 		MaxTokens:      req.MaxTokens,
-		Usage: &model.Usage{
+		Usage: &model.UsageJSONB{
 			PromptTokens:     aiResponse.Usage.PromptTokens,
 			CompletionTokens: aiResponse.Usage.CompletionTokens,
 			TotalTokens:      aiResponse.Usage.TotalTokens,
@@ -181,7 +181,7 @@ func (h *MessageHandler) handleStreamingResponse(ctx context.Context, c *app.Req
 		Model:          req.Model,
 		Temperature:    req.Temperature,
 		MaxTokens:      req.MaxTokens,
-		Usage: &model.Usage{
+		Usage: &model.UsageJSONB{
 			PromptTokens:     len(req.Content) / 4, // Rough estimation
 			CompletionTokens: len(fullContent) / 4,
 			TotalTokens:      (len(req.Content) + len(fullContent)) / 4,
