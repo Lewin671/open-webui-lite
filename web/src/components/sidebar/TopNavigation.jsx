@@ -3,15 +3,6 @@ import React from 'react';
 const TopNavigation = () => {
   return (
     <div className="px-1.5 flex justify-between space-x-1 text-[#262626] dark:text-[#b4b4b4]">
-      {/* 菜单按钮 */}
-      <button className="cursor-pointer p-[7px] flex rounded-xl hover:bg-gray-100 dark:hover:bg-gray-900 transition">
-        <div className="m-auto self-center">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="size-5">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"></path>
-          </svg>
-        </div>
-      </button>
-      
       {/* 新对话按钮 */}
       <a id="sidebar-new-chat-button" className="flex justify-between items-center flex-1 rounded-lg px-2 py-1 h-full text-right hover:bg-gray-100 dark:hover:bg-gray-900 transition no-drag-region" href="/" draggable="false">
         <div className="flex items-center">

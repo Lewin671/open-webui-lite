@@ -26,8 +26,20 @@ export function SidebarProvider({ children }) {
             }
         };
 
+        // Handle localStorage changes
+        const handleStorageChange = (e) => {
+            if (e.key === 'sidebarCollapsed') {
+                setIsCollapsed(JSON.parse(e.newValue || 'false'));
+            }
+        };
+
         window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
+        window.addEventListener('storage', handleStorageChange);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+            window.removeEventListener('storage', handleStorageChange);
+        };
     }, []);
 
     const toggleSidebar = () => {

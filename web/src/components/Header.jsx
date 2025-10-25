@@ -6,15 +6,6 @@ const Header = () => {
       <div className="via-50% from-white via-white to-transparent dark:from-gray-900 dark:via-gray-900 dark:to-transparent pointer-events-none absolute inset-0 -bottom-7 z-[-1]"></div>
       <div className="flex max-w-full w-full mx-auto px-1 pt-0.5 bg-transparent">
         <div className="flex items-center w-full max-w-full">
-          <div className="md:hidden mr-1 self-start flex flex-none items-center text-gray-600 dark:text-gray-400">
-            <button className="cursor-pointer px-2 py-2 flex rounded-xl hover:bg-gray-50 dark:hover:bg-gray-850 transition" aria-label="Toggle Sidebar">
-              <div className="m-auto self-center">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="size-5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"></path>
-                </svg>
-              </div>
-            </button>
-          </div>
           <div className="flex-1 overflow-hidden max-w-full py-0.5 ml-1">
             <div className="flex flex-col w-full items-start">
               <div className="flex w-full max-w-fit">

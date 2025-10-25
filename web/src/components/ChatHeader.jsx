@@ -2,7 +2,6 @@ import React from 'react'
 import { useModel } from '../contexts/ModelContext.jsx'
 import ModelSelector from './ModelSelector.jsx'
 import DarkModeToggle from './DarkModeToggle.jsx'
-import HamburgerMenu from './HamburgerMenu.jsx'
 
 const ChatHeader = () => {
   const { selectedModel } = useModel()
@@ -27,7 +26,6 @@ const ChatHeader = () => {
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <HamburgerMenu />
           <h1 className="text-4xl line-clamp-1">{selectedModel?.name || 'Chat Assistant'}</h1>
           <ModelSelector />
           <DarkModeToggle />
