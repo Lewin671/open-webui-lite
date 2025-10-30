@@ -9,18 +9,15 @@ import (
 	"github.com/cloudwego/hertz/pkg/app"
 	"open-webui-lite/server/internal/dto"
 	"open-webui-lite/server/internal/middleware"
-	"open-webui-lite/server/internal/model"
-	"open-webui-lite/server/internal/repository"
+	"open-webui-lite/server/internal/service"
 )
 
 type ConversationHandler struct {
-	conversationRepo repository.ConversationRepository
+	conversationService service.ConversationService
 }
 
-func NewConversationHandler(conversationRepo repository.ConversationRepository) *ConversationHandler {
-	return &ConversationHandler{
-		conversationRepo: conversationRepo,
-	}
+func NewConversationHandler(conversationService service.ConversationService) *ConversationHandler {
+	return &ConversationHandler{conversationService: conversationService}
 }
 
 func (h *ConversationHandler) CreateConversation(ctx context.Context, c *app.RequestContext) {
@@ -41,14 +38,9 @@ func (h *ConversationHandler) CreateConversation(ctx context.Context, c *app.Req
 	}
 
 	userID := c.GetString("user_id")
-	
-	conversation := &model.Conversation{
-		UserID:   userID,
-		Title:    req.Title,
-		Metadata: req.Metadata,
-	}
 
-	if err := h.conversationRepo.Create(conversation); err != nil {
+	conversation, err := h.conversationService.Create(userID, req)
+	if err != nil {
 		c.JSON(http.StatusInternalServerError, dto.ErrorResponse{
 			Error: "Failed to create conversation",
 			Code:  "INTERNAL_ERROR",
@@ -67,25 +59,25 @@ func (h *ConversationHandler) CreateConversation(ctx context.Context, c *app.Req
 
 func (h *ConversationHandler) GetConversations(ctx context.Context, c *app.RequestContext) {
 	userID := c.GetString("user_id")
-	
+
 	// Get query parameters
 	pageStr := c.DefaultQuery("page", "1")
 	limitStr := c.DefaultQuery("limit", "20")
-	
+
 	page := 1
 	limit := 20
-	
+
 	// Parse page parameter
 	if p, err := strconv.Atoi(pageStr); err == nil && p > 0 {
 		page = p
 	}
-	
+
 	// Parse limit parameter
 	if l, err := strconv.Atoi(limitStr); err == nil && l > 0 {
 		limit = l
 	}
 	search := c.Query("search")
-	
+
 	// Validate pagination parameters
 	if page < 1 {
 		page = 1
@@ -93,18 +85,8 @@ func (h *ConversationHandler) GetConversations(ctx context.Context, c *app.Reque
 	if limit < 1 || limit > 100 {
 		limit = 20
 	}
-	
-	var conversations []*model.Conversation
-	var total int64
-	var err error
-	
-	// Check if search is provided
-	if search != "" {
-		conversations, total, err = h.conversationRepo.SearchByUserID(userID, search, page, limit)
-	} else {
-		conversations, total, err = h.conversationRepo.GetByUserIDWithPagination(userID, page, limit)
-	}
-	
+
+	conversations, total, err := h.conversationService.List(userID, search, page, limit)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dto.ErrorResponse{
 			Error: "Failed to get conversations",
@@ -143,21 +125,12 @@ func (h *ConversationHandler) GetConversations(ctx context.Context, c *app.Reque
 func (h *ConversationHandler) GetConversation(ctx context.Context, c *app.RequestContext) {
 	conversationID := c.Param("id")
 	userID := c.GetString("user_id")
-	
-	conversation, err := h.conversationRepo.GetByID(conversationID)
+
+	conversation, err := h.conversationService.Get(userID, conversationID)
 	if err != nil {
 		c.JSON(http.StatusNotFound, dto.ErrorResponse{
-			Error: "Conversation not found",
+			Error: "Conversation not found or access denied",
 			Code:  "NOT_FOUND",
-		})
-		return
-	}
-
-	// Check if user owns this conversation
-	if conversation.UserID != userID {
-		c.JSON(http.StatusForbidden, dto.ErrorResponse{
-			Error: "Access denied",
-			Code:  "FORBIDDEN",
 		})
 		return
 	}
@@ -175,30 +148,11 @@ func (h *ConversationHandler) GetConversation(ctx context.Context, c *app.Reques
 func (h *ConversationHandler) DeleteConversation(ctx context.Context, c *app.RequestContext) {
 	conversationID := c.Param("id")
 	userID := c.GetString("user_id")
-	
-	// Check if conversation exists and user has access
-	conversation, err := h.conversationRepo.GetByID(conversationID)
-	if err != nil {
+
+	if err := h.conversationService.Delete(userID, conversationID); err != nil {
 		c.JSON(http.StatusNotFound, dto.ErrorResponse{
-			Error: "Conversation not found",
+			Error: "Conversation not found or access denied",
 			Code:  "NOT_FOUND",
-		})
-		return
-	}
-
-	if conversation.UserID != userID {
-		c.JSON(http.StatusForbidden, dto.ErrorResponse{
-			Error: "Access denied",
-			Code:  "FORBIDDEN",
-		})
-		return
-	}
-
-	// Delete the conversation
-	if err := h.conversationRepo.Delete(conversationID); err != nil {
-		c.JSON(http.StatusInternalServerError, dto.ErrorResponse{
-			Error: "Failed to delete conversation",
-			Code:  "INTERNAL_ERROR",
 		})
 		return
 	}
@@ -212,21 +166,12 @@ func (h *ConversationHandler) DeleteConversation(ctx context.Context, c *app.Req
 func (h *ConversationHandler) UpdateConversation(ctx context.Context, c *app.RequestContext) {
 	conversationID := c.Param("id")
 	userID := c.GetString("user_id")
-	
-	// Check if conversation exists and user has access
-	conversation, err := h.conversationRepo.GetByID(conversationID)
+
+	conversation, err := h.conversationService.Get(userID, conversationID)
 	if err != nil {
 		c.JSON(http.StatusNotFound, dto.ErrorResponse{
-			Error: "Conversation not found",
+			Error: "Conversation not found or access denied",
 			Code:  "NOT_FOUND",
-		})
-		return
-	}
-
-	if conversation.UserID != userID {
-		c.JSON(http.StatusForbidden, dto.ErrorResponse{
-			Error: "Access denied",
-			Code:  "FORBIDDEN",
 		})
 		return
 	}
@@ -247,16 +192,7 @@ func (h *ConversationHandler) UpdateConversation(ctx context.Context, c *app.Req
 		return
 	}
 
-	// Update conversation fields
-	if req.Title != "" {
-		conversation.Title = req.Title
-	}
-	if req.Metadata != nil {
-		conversation.Metadata = req.Metadata
-	}
-
-	// Save updated conversation
-	if err := h.conversationRepo.Update(conversation); err != nil {
+	if err := h.conversationService.Update(userID, conversation, req); err != nil {
 		c.JSON(http.StatusInternalServerError, dto.ErrorResponse{
 			Error: "Failed to update conversation",
 			Code:  "INTERNAL_ERROR",

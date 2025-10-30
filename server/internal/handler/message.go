@@ -12,25 +12,18 @@ import (
 	"open-webui-lite/server/internal/dto"
 	"open-webui-lite/server/internal/middleware"
 	"open-webui-lite/server/internal/model"
-	"open-webui-lite/server/internal/repository"
 	"open-webui-lite/server/internal/service"
 )
 
 type MessageHandler struct {
-	messageRepo     repository.MessageRepository
-	conversationRepo repository.ConversationRepository
-	aiService       *service.MockAIService
+	messageService service.MessageService
+	conversationService service.ConversationService
 }
 
-func NewMessageHandler(
-	messageRepo repository.MessageRepository,
-	conversationRepo repository.ConversationRepository,
-	aiService *service.MockAIService,
-) *MessageHandler {
+func NewMessageHandler(messageService service.MessageService, conversationService service.ConversationService) *MessageHandler {
 	return &MessageHandler{
-		messageRepo:     messageRepo,
-		conversationRepo: conversationRepo,
-		aiService:       aiService,
+		messageService: messageService,
+		conversationService: conversationService,
 	}
 }
 
@@ -39,19 +32,10 @@ func (h *MessageHandler) SendMessage(ctx context.Context, c *app.RequestContext)
 	userID := c.GetString("user_id")
 	
 	// Check if conversation exists and user has access
-	conversation, err := h.conversationRepo.GetByID(conversationID)
-	if err != nil {
+	if _, err := h.conversationService.Get(userID, conversationID); err != nil {
 		c.JSON(http.StatusNotFound, dto.ErrorResponse{
 			Error: "Conversation not found",
 			Code:  "NOT_FOUND",
-		})
-		return
-	}
-
-	if conversation.UserID != userID {
-		c.JSON(http.StatusForbidden, dto.ErrorResponse{
-			Error: "Access denied",
-			Code:  "FORBIDDEN",
 		})
 		return
 	}
@@ -73,17 +57,7 @@ func (h *MessageHandler) SendMessage(ctx context.Context, c *app.RequestContext)
 	}
 
 	// Create user message
-	userMessage := &model.Message{
-		ConversationID: conversationID,
-		UserID:         userID,
-		Role:           req.Role,
-		Content:        req.Content,
-		Model:          req.Model,
-		Temperature:    req.Temperature,
-		MaxTokens:      req.MaxTokens,
-	}
-
-	if err := h.messageRepo.Create(userMessage); err != nil {
+	if _, err := h.messageService.CreateUserMessage(conversationID, userID, req); err != nil {
 		c.JSON(http.StatusInternalServerError, dto.ErrorResponse{
 			Error: "Failed to save user message",
 			Code:  "INTERNAL_ERROR",
@@ -99,7 +73,7 @@ func (h *MessageHandler) SendMessage(ctx context.Context, c *app.RequestContext)
 	}
 
 	// Generate AI response
-	aiResponse, err := h.aiService.GenerateResponse(ctx, req)
+	aiResponse, err := h.messageService.GenerateAIResponse(ctx, req)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dto.ErrorResponse{
 			Error: "Failed to generate AI response",
@@ -109,31 +83,24 @@ func (h *MessageHandler) SendMessage(ctx context.Context, c *app.RequestContext)
 	}
 
 	// Create assistant message
-	assistantMessage := &model.Message{
-		ConversationID: conversationID,
-		UserID:         userID,
-		Role:           "assistant",
-		Content:        aiResponse.Message.Content,
-		Model:          req.Model,
-		Temperature:    req.Temperature,
-		MaxTokens:      req.MaxTokens,
-		Usage: &model.UsageJSONB{
+	assistantMessage, err := h.messageService.CreateAssistantMessage(
+		conversationID,
+		userID,
+		req,
+		aiResponse.Message.Content,
+		&model.UsageJSONB{
 			PromptTokens:     aiResponse.Usage.PromptTokens,
 			CompletionTokens: aiResponse.Usage.CompletionTokens,
 			TotalTokens:      aiResponse.Usage.TotalTokens,
 		},
-	}
-
-	if err := h.messageRepo.Create(assistantMessage); err != nil {
+	)
+	if err != nil {
 		c.JSON(http.StatusInternalServerError, dto.ErrorResponse{
 			Error: "Failed to save assistant message",
 			Code:  "INTERNAL_ERROR",
 		})
 		return
 	}
-
-	// Update conversation message count
-	h.conversationRepo.IncrementMessageCount(conversationID)
 
 	// Return response
 	c.JSON(http.StatusOK, dto.SendMessageResponse{
@@ -163,7 +130,7 @@ func (h *MessageHandler) handleStreamingResponse(ctx context.Context, c *app.Req
 	
 	go func() {
 		defer close(deltaChan)
-		h.aiService.GenerateStreamResponse(ctx, req, func(delta dto.StreamDelta) {
+		_ = h.messageService.GenerateStreamResponse(ctx, req, func(delta dto.StreamDelta) {
 			deltaChan <- delta
 		})
 	}()
@@ -182,28 +149,17 @@ func (h *MessageHandler) handleStreamingResponse(ctx context.Context, c *app.Req
 	}
 
 	// Create final assistant message
-	assistantMessage := &model.Message{
-		ConversationID: conversationID,
-		UserID:         userID,
-		Role:           "assistant",
-		Content:        fullContent,
-		Model:          req.Model,
-		Temperature:    req.Temperature,
-		MaxTokens:      req.MaxTokens,
-		Usage: &model.UsageJSONB{
-			PromptTokens:     len(req.Content) / 4, // Rough estimation
+	assistantMessage, _ := h.messageService.CreateAssistantMessage(
+		conversationID,
+		userID,
+		req,
+		fullContent,
+		&model.UsageJSONB{
+			PromptTokens:     len(req.Content) / 4,
 			CompletionTokens: len(fullContent) / 4,
 			TotalTokens:      (len(req.Content) + len(fullContent)) / 4,
 		},
-	}
-
-	if err := h.messageRepo.Create(assistantMessage); err != nil {
-		// Log error but don't fail the stream
-		fmt.Printf("Failed to save assistant message: %v\n", err)
-	}
-
-	// Update conversation message count
-	h.conversationRepo.IncrementMessageCount(conversationID)
+	)
 
 	// Send final message
 	finalMessage := dto.StreamDone{
@@ -231,19 +187,10 @@ func (h *MessageHandler) GetMessages(ctx context.Context, c *app.RequestContext)
 	userID := c.GetString("user_id")
 	
 	// Check if conversation exists and user has access
-	conversation, err := h.conversationRepo.GetByID(conversationID)
-	if err != nil {
+	if _, err := h.conversationService.Get(userID, conversationID); err != nil {
 		c.JSON(http.StatusNotFound, dto.ErrorResponse{
 			Error: "Conversation not found",
 			Code:  "NOT_FOUND",
-		})
-		return
-	}
-
-	if conversation.UserID != userID {
-		c.JSON(http.StatusForbidden, dto.ErrorResponse{
-			Error: "Access denied",
-			Code:  "FORBIDDEN",
 		})
 		return
 	}
@@ -274,7 +221,7 @@ func (h *MessageHandler) GetMessages(ctx context.Context, c *app.RequestContext)
 	}
 
 	// Get messages for this conversation with pagination
-	messages, total, err := h.messageRepo.GetByConversationIDWithPagination(conversationID, page, limit)
+	messages, total, err := h.messageService.ListByConversation(conversationID, page, limit)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dto.ErrorResponse{
 			Error: "Failed to get messages",
