@@ -16,23 +16,13 @@ class TokenManager {
     }
 
     setTokens(accessToken, refreshToken) {
-        console.log('Setting tokens:', { 
-            accessToken: accessToken ? `${accessToken.substring(0, 20)}... (length: ${accessToken.length})` : 'null',
-            refreshToken: refreshToken ? `${refreshToken.substring(0, 20)}... (length: ${refreshToken.length})` : 'null'
-        });
-        
-        if (!accessToken) {
-            console.warn('Warning: Attempting to set null or empty access token');
-            return;
-        }
-
+        if (!accessToken) return;
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
         localStorage.setItem('access_token', accessToken);
         if (refreshToken) {
             localStorage.setItem('refresh_token', refreshToken);
         }
-        console.log('Tokens set successfully');
     }
 
     clearTokens() {
@@ -43,12 +33,10 @@ class TokenManager {
     }
 
     getAccessToken() {
-        // Always check localStorage in case token was updated elsewhere
         const storedToken = localStorage.getItem('access_token');
         if (storedToken) {
             this.accessToken = storedToken;
         }
-        console.log('Getting access token:', this.accessToken ? this.accessToken.substring(0, 20) + '...' : 'null');
         return this.accessToken;
     }
 
@@ -76,7 +64,6 @@ const tokenManager = new TokenManager();
 // Request interceptor - add auth token
 apiClient.interceptors.request.use(
     (config) => {
-        // Skip auth for login and refresh endpoints
         const skipAuth = config.url?.includes('/auth/login') ||
             config.url?.includes('/auth/refresh') ||
             config.url?.includes('/models');
@@ -85,15 +72,8 @@ apiClient.interceptors.request.use(
             const token = tokenManager.getAccessToken();
             if (token) {
                 config.headers.Authorization = `Bearer ${token}`;
-                console.log('Request details:', {
-                    url: config.url,
-                    method: config.method,
-                    tokenLength: token.length,
-                    tokenPrefix: token.substring(0, 20),
-                    fullHeader: `Bearer ${token}`
-                });
             } else {
-                console.warn('No token found for request to:', config.url);
+                // no token, let request fail and be handled by interceptor
             }
         }
         return config;
@@ -138,8 +118,13 @@ apiClient.interceptors.response.use(
                 return Promise.reject(refreshError);
             }
         }
-
-        return Promise.reject(error);
+        // Normalize error shape
+        const normalized = {
+            status: error.response?.status || 0,
+            code: error.response?.data?.code || 'UNKNOWN_ERROR',
+            message: error.response?.data?.error || error.message || 'Request failed',
+        };
+        return Promise.reject(normalized);
     }
 );
 
