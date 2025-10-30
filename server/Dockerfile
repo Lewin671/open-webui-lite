@@ -17,13 +17,18 @@ RUN go mod download
 COPY . .
 
 # 构建应用
+# Build main API binary
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main cmd/api/main.go
+
+# Build migrate and seed tools for in-container init
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o migrate cmd/migrate/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o seed cmd/seed/main.go
 
 # 运行阶段
 FROM alpine:latest
 
 # 安装ca证书
-RUN apk --no-cache add ca-certificates
+RUN apk --no-cache add ca-certificates postgresql-client
 
 # 创建非root用户
 RUN adduser -D -s /bin/sh appuser
@@ -33,6 +38,10 @@ WORKDIR /root/
 
 # 复制构建的二进制文件
 COPY --from=builder /app/main .
+COPY --from=builder /app/migrate .
+COPY --from=builder /app/seed .
+COPY entrypoint.sh ./entrypoint.sh
+RUN chmod +x ./entrypoint.sh
 
 # 创建默认配置文件
 RUN echo "SERVER_PORT=8080" > .env && \
@@ -62,4 +71,4 @@ USER appuser
 EXPOSE 8080
 
 # 启动应用
-CMD ["./main"]
+ENTRYPOINT ["/bin/sh", "./entrypoint.sh"]
