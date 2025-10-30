@@ -26,6 +26,9 @@ func NewMockAIService() *MockAIService {
 	}
 }
 
+// Ensure MockAIService implements AIService
+var _ AIService = (*MockAIService)(nil)
+
 func (s *MockAIService) GenerateResponse(ctx context.Context, request dto.SendMessageRequest) (*dto.SendMessageResponse, error) {
 	// Simulate processing time
 	time.Sleep(time.Duration(rand.Intn(2000)+500) * time.Millisecond)

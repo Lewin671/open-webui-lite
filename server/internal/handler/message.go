@@ -13,19 +13,19 @@ import (
 	"open-webui-lite/server/internal/middleware"
 	"open-webui-lite/server/internal/model"
 	"open-webui-lite/server/internal/repository"
-	"open-webui-lite/server/internal/service"
+    "open-webui-lite/server/internal/service"
 )
 
 type MessageHandler struct {
 	messageRepo     repository.MessageRepository
 	conversationRepo repository.ConversationRepository
-	aiService       *service.MockAIService
+    aiService       service.AIService
 }
 
 func NewMessageHandler(
 	messageRepo repository.MessageRepository,
 	conversationRepo repository.ConversationRepository,
-	aiService *service.MockAIService,
+    aiService service.AIService,
 ) *MessageHandler {
 	return &MessageHandler{
 		messageRepo:     messageRepo,

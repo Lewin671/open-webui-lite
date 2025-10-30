@@ -35,11 +35,12 @@ func main() {
 	conversationRepo := repository.NewConversationRepository()
 	messageRepo := repository.NewMessageRepository()
 	
-	// Initialize services
-	aiService := service.NewMockAIService()
+    // Initialize services
+    aiService := service.NewMockAIService()
+    authService := service.NewAuthService(userRepo)
 	
-	// Initialize handlers
-	authHandler := handler.NewAuthHandler(userRepo)
+    // Initialize handlers
+    authHandler := handler.NewAuthHandler(authService)
 	conversationHandler := handler.NewConversationHandler(conversationRepo)
 	messageHandler := handler.NewMessageHandler(messageRepo, conversationRepo, aiService)
 	modelHandler := handler.NewModelHandler()
