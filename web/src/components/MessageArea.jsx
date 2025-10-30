@@ -52,7 +52,7 @@ const MessageArea = () => {
                     <div className="whitespace-pre-wrap">{message.content}</div>
                   )}
                   <div className="text-xs opacity-70 mt-1">
-                    {new Date(message.created_at).toLocaleTimeString()}
+                    {message.createdAt ? new Date(message.createdAt).toLocaleTimeString() : ''}
                   </div>
                 </div>
               </div>

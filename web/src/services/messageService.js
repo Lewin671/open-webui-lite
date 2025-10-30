@@ -7,7 +7,11 @@ class MessageService {
             const response = await apiClient.get(ENDPOINTS.MESSAGES(conversationId));
             return {
                 success: true,
-                data: response.data,
+                // Backend returns a paginated object: { messages, total, page, ... }
+                // Normalize to an array for consumers that expect a list
+                data: Array.isArray(response.data?.messages)
+                    ? response.data.messages
+                    : [],
             };
         } catch (error) {
             return {

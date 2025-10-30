@@ -77,7 +77,7 @@ const Input = ({ selectedSuggestion }) => {
       id: `temp-${Date.now()}`,
       role: 'user',
       content: inputText.trim(),
-      created_at: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
     };
 
     // Add user message immediately
@@ -98,7 +98,7 @@ const Input = ({ selectedSuggestion }) => {
         id: assistantMessageId,
         role: 'assistant',
         content: '',
-        created_at: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
       };
 
       addMessage(assistantMessage);
@@ -136,7 +136,7 @@ const Input = ({ selectedSuggestion }) => {
           updateMessage(assistantMessageId, {
             id: finalMessage.message.id,
             content: finalMessage.message.content,
-            created_at: finalMessage.message.created_at,
+            createdAt: finalMessage.message.createdAt,
           });
           setStreamingMessage(null);
           setIsLoading(false);
