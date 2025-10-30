@@ -35,13 +35,16 @@ func main() {
 	conversationRepo := repository.NewConversationRepository()
 	messageRepo := repository.NewMessageRepository()
 	
-	// Initialize services
-	aiService := service.NewMockAIService()
+    // Initialize services
+    aiService := service.NewMockAIService()
+    authService := service.NewAuthService(userRepo)
+    conversationService := service.NewConversationService(conversationRepo)
+    messageService := service.NewMessageService(messageRepo, conversationRepo, aiService)
 	
-	// Initialize handlers
-	authHandler := handler.NewAuthHandler(userRepo)
-	conversationHandler := handler.NewConversationHandler(conversationRepo)
-	messageHandler := handler.NewMessageHandler(messageRepo, conversationRepo, aiService)
+    // Initialize handlers
+    authHandler := handler.NewAuthHandler(authService)
+    conversationHandler := handler.NewConversationHandler(conversationService)
+    messageHandler := handler.NewMessageHandler(messageService)
 	modelHandler := handler.NewModelHandler()
 	
 	// Create Hertz server

@@ -1,27 +1,20 @@
 package handler
 
 import (
-	"context"
-	"net/http"
-	"strconv"
-	"time"
+    "context"
+    "net/http"
+    "strconv"
+    "time"
 
-	"github.com/cloudwego/hertz/pkg/app"
-	"open-webui-lite/server/internal/dto"
-	"open-webui-lite/server/internal/middleware"
-	"open-webui-lite/server/internal/model"
-	"open-webui-lite/server/internal/repository"
+    "github.com/cloudwego/hertz/pkg/app"
+    "open-webui-lite/server/internal/dto"
+    "open-webui-lite/server/internal/middleware"
+    "open-webui-lite/server/internal/service"
 )
 
-type ConversationHandler struct {
-	conversationRepo repository.ConversationRepository
-}
+type ConversationHandler struct { svc service.ConversationService }
 
-func NewConversationHandler(conversationRepo repository.ConversationRepository) *ConversationHandler {
-	return &ConversationHandler{
-		conversationRepo: conversationRepo,
-	}
-}
+func NewConversationHandler(svc service.ConversationService) *ConversationHandler { return &ConversationHandler{svc: svc} }
 
 func (h *ConversationHandler) CreateConversation(ctx context.Context, c *app.RequestContext) {
 	var req dto.CreateConversationRequest
@@ -40,15 +33,9 @@ func (h *ConversationHandler) CreateConversation(ctx context.Context, c *app.Req
 		return
 	}
 
-	userID := c.GetString("user_id")
-	
-	conversation := &model.Conversation{
-		UserID:   userID,
-		Title:    req.Title,
-		Metadata: req.Metadata,
-	}
-
-	if err := h.conversationRepo.Create(conversation); err != nil {
+    userID := c.GetString("user_id")
+    conversation, err := h.svc.Create(userID, req)
+    if err != nil {
 		c.JSON(http.StatusInternalServerError, dto.ErrorResponse{
 			Error: "Failed to create conversation",
 			Code:  "INTERNAL_ERROR",
@@ -94,16 +81,7 @@ func (h *ConversationHandler) GetConversations(ctx context.Context, c *app.Reque
 		limit = 20
 	}
 	
-	var conversations []*model.Conversation
-	var total int64
-	var err error
-	
-	// Check if search is provided
-	if search != "" {
-		conversations, total, err = h.conversationRepo.SearchByUserID(userID, search, page, limit)
-	} else {
-		conversations, total, err = h.conversationRepo.GetByUserIDWithPagination(userID, page, limit)
-	}
+    conversations, total, err := h.svc.List(userID, page, limit, search)
 	
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, dto.ErrorResponse{
@@ -144,21 +122,12 @@ func (h *ConversationHandler) GetConversation(ctx context.Context, c *app.Reques
 	conversationID := c.Param("id")
 	userID := c.GetString("user_id")
 	
-	conversation, err := h.conversationRepo.GetByID(conversationID)
+    conversation, err := h.svc.Get(userID, conversationID)
 	if err != nil {
-		c.JSON(http.StatusNotFound, dto.ErrorResponse{
-			Error: "Conversation not found",
-			Code:  "NOT_FOUND",
-		})
-		return
-	}
-
-	// Check if user owns this conversation
-	if conversation.UserID != userID {
-		c.JSON(http.StatusForbidden, dto.ErrorResponse{
-			Error: "Access denied",
-			Code:  "FORBIDDEN",
-		})
+        status := http.StatusNotFound
+        code := "NOT_FOUND"
+        if err == service.ErrForbidden { status = http.StatusForbidden; code = "FORBIDDEN" }
+        c.JSON(status, dto.ErrorResponse{ Error: "Conversation not found", Code: code })
 		return
 	}
 
@@ -176,26 +145,8 @@ func (h *ConversationHandler) DeleteConversation(ctx context.Context, c *app.Req
 	conversationID := c.Param("id")
 	userID := c.GetString("user_id")
 	
-	// Check if conversation exists and user has access
-	conversation, err := h.conversationRepo.GetByID(conversationID)
-	if err != nil {
-		c.JSON(http.StatusNotFound, dto.ErrorResponse{
-			Error: "Conversation not found",
-			Code:  "NOT_FOUND",
-		})
-		return
-	}
-
-	if conversation.UserID != userID {
-		c.JSON(http.StatusForbidden, dto.ErrorResponse{
-			Error: "Access denied",
-			Code:  "FORBIDDEN",
-		})
-		return
-	}
-
-	// Delete the conversation
-	if err := h.conversationRepo.Delete(conversationID); err != nil {
+    // Delete the conversation
+    if err := h.svc.Delete(userID, conversationID); err != nil {
 		c.JSON(http.StatusInternalServerError, dto.ErrorResponse{
 			Error: "Failed to delete conversation",
 			Code:  "INTERNAL_ERROR",
@@ -213,23 +164,7 @@ func (h *ConversationHandler) UpdateConversation(ctx context.Context, c *app.Req
 	conversationID := c.Param("id")
 	userID := c.GetString("user_id")
 	
-	// Check if conversation exists and user has access
-	conversation, err := h.conversationRepo.GetByID(conversationID)
-	if err != nil {
-		c.JSON(http.StatusNotFound, dto.ErrorResponse{
-			Error: "Conversation not found",
-			Code:  "NOT_FOUND",
-		})
-		return
-	}
-
-	if conversation.UserID != userID {
-		c.JSON(http.StatusForbidden, dto.ErrorResponse{
-			Error: "Access denied",
-			Code:  "FORBIDDEN",
-		})
-		return
-	}
+    // Ownership validation is enforced in service
 
 	var req dto.UpdateConversationRequest
 	if err := c.BindJSON(&req); err != nil {
@@ -247,16 +182,9 @@ func (h *ConversationHandler) UpdateConversation(ctx context.Context, c *app.Req
 		return
 	}
 
-	// Update conversation fields
-	if req.Title != "" {
-		conversation.Title = req.Title
-	}
-	if req.Metadata != nil {
-		conversation.Metadata = req.Metadata
-	}
-
-	// Save updated conversation
-	if err := h.conversationRepo.Update(conversation); err != nil {
+    // Save updated conversation
+    conversation, err := h.svc.Update(userID, conversationID, req)
+    if err != nil {
 		c.JSON(http.StatusInternalServerError, dto.ErrorResponse{
 			Error: "Failed to update conversation",
 			Code:  "INTERNAL_ERROR",

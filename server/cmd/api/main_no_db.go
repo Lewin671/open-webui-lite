@@ -1,3 +1,4 @@
+//go:build no_db
 package main
 
 import (
